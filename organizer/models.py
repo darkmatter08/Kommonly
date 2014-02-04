@@ -1,28 +1,7 @@
-# Shawn Jain 
-# 2/3/2014
-# Kommonly project
-
-# imports
 from django.db import models
-from django import forms
 
-charFieldMaxLength = 50
-# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
-sponsorship_type_choices = (
-	(1, "Funds"),
-	(2, "Space"),
-	(3, "People"),
-	(4, "Food"),
-)
-
-class Sponsor(models.Model):
-	name_user = models.CharField(max_length=charFieldMaxLength)
-	email = models.EmailField(unique=True)
-	password = models.CharField(max_length=charFieldMaxLength)
-	organization = models.CharField(max_length=charFieldMaxLength)
-	join_date = models.DateTimeField(auto_now_add=True)
-	# M2M Sponsors and events, through Sponsor_Event
-	backed_event = models.ManyToManyField('Event', through='Sponsor_Event')
+# Create your models here.
+from sponsor.models import *
 
 class Organizer(models.Model):
 	name_user = models.CharField(max_length=charFieldMaxLength)
@@ -31,6 +10,7 @@ class Organizer(models.Model):
 	organization = models.CharField(max_length=charFieldMaxLength)
 	join_date = models.DateTimeField(auto_now_add=True)
 	# event = # O2M with event
+
 
 class Event(models.Model):
 	#M2O Events => Organizer
@@ -47,14 +27,11 @@ class Sponsor_Event(models.Model):
 
 class Sponsorship_type_Sponsor_Event(models.Model):
 	sponsor_event = models.ForeignKey(Sponsor_Event)
-	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
+	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
+	sponsorship_type = models.IntegerField()
 
 class Seeking_type_Event(models.Model):
 	event = models.ForeignKey(Event)
 	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
-	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
-
-class OrganizerForm(forms.ModelForm):
-	class Meta:
-		model = Organizer
-		fields = ['name_user', 'email', 'password', 'organization']
+	sponsorship_type = models.IntegerField()
+	sponsorship_amount = models.CharField(max_length=charFieldMaxLength)
