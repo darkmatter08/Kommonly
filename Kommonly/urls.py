@@ -14,4 +14,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'Kommonly.views.home'),
+    url(r'^api/organizer/signup$', 'Kommonly.views.organizer_signup'),
+    url(r'^organizer/home$', 'Kommonly.views.organizer_home'),
 )

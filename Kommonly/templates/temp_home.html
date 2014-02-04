@@ -26,13 +26,12 @@
 		<h3>Shawn Jain, Nuseir Yassin</h3>
 		<h2>Sponsor Matching Service</p>
 
-		<form action="" method="post">
-	        {% csrf_token %}
+		<form action="api/organizer/signup" method="post">
 	        <table>
 	            {{ form.as_table }}
 	        </table>
         <input type="submit" value="Submit">
-        
+
     </form>
 	</body>
 </html>
