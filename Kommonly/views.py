@@ -8,6 +8,7 @@ from django.http import *
 import json
 from django.views.decorators.csrf import csrf_exempt
 from Kommonly.models import *
+from organizer.forms import * 
 
 def home(request):
 	form = OrganizerForm()
