@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from Kommonly.models import *
 
 def home(request):
+	form = OrganizerForm()
 	t = get_template('temp_home.html')
-	html = t.render(Context({}))
+	html = t.render(Context({'form': form}))
 	return HttpResponse(html)

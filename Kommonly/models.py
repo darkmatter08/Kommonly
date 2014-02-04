@@ -4,7 +4,7 @@
 
 # imports
 from django.db import models
-from django.forms import ModelForm
+from django import forms
 
 charFieldMaxLength = 50
 
@@ -47,3 +47,8 @@ class Seeking_type_Event(models.Model):
 	event = models.ForeignKey(Event)
 	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
 	sponsorship_type = models.IntegerField()
+
+class OrganizerForm(forms.ModelForm):
+	class Meta:
+		model = Organizer
+		fields = ['name_user', 'email', 'password', 'organization']
