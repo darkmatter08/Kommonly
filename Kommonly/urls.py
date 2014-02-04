@@ -14,12 +14,12 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'Kommonly.views.home'),
-    url(r'^api/organizer/signup$', 'Kommonly.views.organizer_signup'),
-    url(r'^organizer/home$', 'Kommonly.views.organizer_home'),
 )
 
 urlpatterns += patterns('organizer.views',
     # url(r'^staff/interview_status/$', 'interview_status'),
+    url(r'^api/organizer/signup$', 'organizer_signup'),
+    url(r'^organizer/home$', 'organizer_home'),
     url(r'^dashboard/$', 'show_dashboard'),
 )
 urlpatterns += patterns('sponsor.views',

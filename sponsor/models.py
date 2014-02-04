@@ -3,12 +3,6 @@ from django.db import models
 from organizer.models import *
 # Create your models here.
 
-sponsorship_type_choices = (
-	(1, "Funds"),
-	(2, "Space"),
-	(3, "People"),
-	(4, "Food"),
-)
 charFieldMaxLength = 50
 
 class Sponsor(models.Model):
@@ -36,10 +30,30 @@ class Sponsor_Event(models.Model):
 class Seeking_type_Event(models.Model):
 	event = models.ForeignKey(Event)
 	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
+	FUNDS = 1
+	SPACE = 2
+	PEOPLE = 3
+	FOOD = 4
+	sponsorship_type_choices = (
+		(FUNDS, "Funds"),
+		(SPACE, "Space"),
+		(PEOPLE, "People"),
+		(FOOD, "Food"),
+	)
 	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
 	sponsorship_amount = models.CharField(max_length=charFieldMaxLength)
 
 class Sponsorship_type_Sponsor_Event(models.Model):
 	sponsor_event = models.ForeignKey(Sponsor_Event)
 	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
+	FUNDS = 1
+	SPACE = 2
+	PEOPLE = 3
+	FOOD = 4
+	sponsorship_type_choices = (
+		(FUNDS, "Funds"),
+		(SPACE, "Space"),
+		(PEOPLE, "People"),
+		(FOOD, "Food"),
+	)
 	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
