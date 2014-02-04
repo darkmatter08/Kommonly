@@ -12,6 +12,7 @@
 		<style> 
 		body {
 			padding-left: 30px;
+			padding-right: 30px;
 		}
 		</style>
 		<script>
@@ -26,5 +27,28 @@
 		<p>Sponsor Matching Service</p>
 		<p>Organizer Dashboard</p>
 		<h3>Welcome, {{ organizer.name_user }}</h3>
+
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>Date</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				{% for event in events %}
+					<td>{{ event.name }}</td>
+					<td>{{ event.date }}</td>
+					<td>{{ event.description }}</td>
+				{% endfor %}
+			</tr>
+		</table>
+
+		<form action="/api/organizer/newEvent" method="post">
+	        <table>
+	            {{ newEvent.as_table }}
+	        </table>
+	        <!-- {% csrf_token %} -->
+        	<input type="submit" value="Submit">
+    	</form>
 	</body>
 </html>

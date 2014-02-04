@@ -19,6 +19,8 @@ class Event(models.Model):
 	organizer = models.ForeignKey(Organizer) 
 	create_date = models.DateTimeField(auto_now_add=True)
 	event_date = models.DateTimeField()
+	name = models.CharField(max_length=charFieldMaxLength)
+	description = models.CharField(max_length=charFieldMaxLength)
 	# seeking_type = # O2M with Seeking_type_Event
 
 class Sponsor_Event(models.Model):
