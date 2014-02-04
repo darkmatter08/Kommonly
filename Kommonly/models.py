@@ -7,6 +7,13 @@ from django.db import models
 from django import forms
 
 charFieldMaxLength = 50
+# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
+sponsorship_type_choices = (
+	(1, "Funds"),
+	(2, "Space"),
+	(3, "People"),
+	(4, "Food"),
+)
 
 class Sponsor(models.Model):
 	name_user = models.CharField(max_length=charFieldMaxLength)
@@ -40,13 +47,12 @@ class Sponsor_Event(models.Model):
 
 class Sponsorship_type_Sponsor_Event(models.Model):
 	sponsor_event = models.ForeignKey(Sponsor_Event)
-	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
-	sponsorship_type = models.IntegerField()
+	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
 
 class Seeking_type_Event(models.Model):
 	event = models.ForeignKey(Event)
 	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
-	sponsorship_type = models.IntegerField()
+	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
 
 class OrganizerForm(forms.ModelForm):
 	class Meta:
