@@ -17,3 +17,12 @@ urlpatterns = patterns('',
     url(r'^api/organizer/signup$', 'Kommonly.views.organizer_signup'),
     url(r'^organizer/home$', 'Kommonly.views.organizer_home'),
 )
+
+urlpatterns += patterns('organizer.views',
+    # url(r'^staff/interview_status/$', 'interview_status'),
+    url(r'^dashboard/$', 'show_dashboard'),
+)
+urlpatterns += patterns('sponsor.views',
+    # url(r'^staff/interview_status/$', 'interview_status'),
+    url(r'^company_dashboard/$', 'show_company_dashbaord'),
+)
