@@ -23,7 +23,13 @@ def organizer_signup(request):
 	return HttpResponseRedirect('/organizer/home')
 
 def organizer_home(request):
-	context = { "organizer": {"name_user": "shawn"}, "events": [{"name": "event1", "date": "1/1/2015", "description": "something"},], "newEvent": EventForm()}
+	allEvents = Event.objects.all()
+	eventTemplateVar = []
+	if len(allEvents) != 0:
+		for myEvent in allEvents:
+			eventDict = {"name": myEvent.name, "date": myEvent.create_date, "description": myEvent.description}
+			eventTemplateVar.append(eventDict)
+	context = { "organizer": {"name_user": "shawn"}, "events": eventTemplateVar, "newEvent": EventForm()}
 	return render(request, 'organizer/organizer_dashboard.html', context)
 
 # POST request, AJAX method.
@@ -32,7 +38,10 @@ def newEvent(request):
 	if request.method != 'POST':
 		return HttpResponseBadRequest()
 	eventForm = EventForm(request.POST)
-	print eventForm.is_bound
-	print eventForm.is_valid()
-	print eventForm.cleaned_data
-	return HttpResponse(json.dumps(eventForm.cleaned_data), content_type="application/json")
+	# TODO change the organizer to the currently logged in user. 
+	newEvent = Event(organizer=Organizer.objects.get(email="sj@mit.edu"), event_date=eventForm.cleaned_data['event_date'], name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'])
+	newEvent.save()
+	return HttpResponseRedirect('/organizer/home')
+	# TODO return as JSON so the client can update the page dynamically.
+	# or have the client do an AJAX to get the data and update the table automatically
+	#return HttpResponse(json.dumps(eventForm.cleaned_data), content_type="application/json")

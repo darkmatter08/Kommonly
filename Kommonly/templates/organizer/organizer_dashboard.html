@@ -34,13 +34,13 @@
 				<th>Date</th>
 				<th>Description</th>
 			</tr>
+			{% for event in events %}
 			<tr>
-				{% for event in events %}
-					<td>{{ event.name }}</td>
-					<td>{{ event.date }}</td>
-					<td>{{ event.description }}</td>
-				{% endfor %}
+				<td>{{ event.name }}</td>
+				<td>{{ event.date }}</td>
+				<td>{{ event.description }}</td>
 			</tr>
+			{% endfor %}
 		</table>
 
 		<form action="/api/organizer/newEvent" method="post">
