@@ -1,5 +1,5 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, get_list_or_404
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -7,6 +7,9 @@ from organizer.models import *
 from organizer.forms import *
 from sponsor.models import *
 from sponsor.forms import *
+
+
+
 
 def show_dashboard(request):
 	print "Hello there. This is the organizer page"
@@ -45,3 +48,18 @@ def newEvent(request):
 	# TODO return as JSON so the client can update the page dynamically.
 	# or have the client do an AJAX to get the data and update the table automatically
 	#return HttpResponse(json.dumps(eventForm.cleaned_data), content_type="application/json")
+
+# AJAX method to serialize all current events and return as JSON. 
+# Frontend can call this to load all current events. 
+@csrf_exempt
+def getAllEvents(request):
+	if request.method != 'POST':
+		print "bad request"
+		return HttpResponseBadRequest()
+	allEvents = []
+	for currentEvent in Event.objects.all():
+		allEvents.append({"event_date" : currentEvent.event_date.strftime('%Y-%m-%dT%H:%M:%S'), "name" : currentEvent.name, "description" : currentEvent.description})
+	return HttpResponse(json.dumps(allEvents), content_type="application/json")
+
+
+
