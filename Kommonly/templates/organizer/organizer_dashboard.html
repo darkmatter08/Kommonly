@@ -17,7 +17,12 @@
 		</style>
 		<script>
 		$(document).ready(function(){
-			
+			$.post("/api/organizer/getAllEvents", function(data){
+				for (var myIndex in data) {
+					var myEvent = data[myIndex]
+					$('#ajaxTable tr:last').after('<tr>'+'<td>'+ myEvent.name + '</td>'+'<td>'+ myEvent.event_date + '</td>' +'<td>'+ myEvent.description + '</td>'+'</tr>');
+				}
+			});
 		});	
 		</script>
 	</head>
@@ -50,5 +55,13 @@
 	        <!-- {% csrf_token %} -->
         	<input type="submit" value="Submit">
     	</form>
+
+    	<table class="table" id="ajaxTable">
+    		<tr>
+				<th>Name</th>
+				<th>Date</th>
+				<th>Description</th>
+			</tr>
+    	</table>
 	</body>
 </html>
