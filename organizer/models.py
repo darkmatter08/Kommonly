@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 from sponsor.models import *
 
@@ -13,9 +13,7 @@ sponsorship_type_choices = (
 charFieldMaxLength = 50
 
 class Organizer(models.Model):
-	name_user = models.CharField(max_length=charFieldMaxLength)
-	email = models.EmailField(unique=True)
-	password = models.CharField(max_length=charFieldMaxLength)
+	user = models.OneToOneField(User)
 	organization = models.CharField(max_length=charFieldMaxLength)
-	join_date = models.DateTimeField(auto_now_add=True)
 	# event = # O2M with event
+

@@ -77,12 +77,8 @@ WSGI_APPLICATION = 'Kommonly.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jains+kommonly_dev',
-        'USER': 'jains',
-        'PASSWORD': 'wup49kuj',
-        'HOST': 'sql.mit.edu',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 # Internationalization
