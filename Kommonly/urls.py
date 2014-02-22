@@ -27,8 +27,11 @@ urlpatterns += patterns('organizer.views',
     url(r'^dashboard/$', 'show_dashboard'),
     url(r'^api/organizer/getAllEvents$', 'getAllEvents'),
     url(r'^signup$', 'signup'),
+
 )
 urlpatterns += patterns('sponsor.views',
     # url(r'^staff/interview_status/$', 'interview_status'),
     url(r'^company_dashboard/$', 'show_company_dashbaord'),
+    url(r'^companies$', 'get_companies'),
+
 )

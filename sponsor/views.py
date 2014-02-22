@@ -8,4 +8,8 @@ from sponsor.models import *
 def show_company_dashboard(request):
 	print "Hello there. This is the organizer page"
 	return render(request, 'sponsor/dashboard.html')
+
+def get_companies(request):
+	print "Companies"
+	return render(request, 'sponsors')
 	
