@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'south',
     'sponsor',
     'organizer',
+    'events',
 )
 
 MIDDLEWARE_CLASSES = (
