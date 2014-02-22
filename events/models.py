@@ -52,5 +52,5 @@ class Event_Sponsorship_Type(models.Model):
 	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
 
 class Event_Image(models.Model):
-	pic = models.ImageField(upload_to = 'assets/', default = 'assets/None/no-img.jpg')
+	pic = models.ImageField(upload_to = 'Kommonly/static/assets/', default = 'assets/None/no-img.jpg')
 	event = models.ForeignKey(Event)
