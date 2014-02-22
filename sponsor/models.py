@@ -5,10 +5,14 @@ from organizer.models import *
 
 charFieldMaxLength = 50
 
-class Sponsor(models.Model):
-	name_user = models.CharField(max_length=charFieldMaxLength)
-	email = models.EmailField(unique=True)
-	password = models.CharField(max_length=charFieldMaxLength)
-	organization = models.CharField(max_length=charFieldMaxLength)
-	join_date = models.DateTimeField(auto_now_add=True)
+class Organization(models.Model):
+	name = models.CharField(max_length=charFieldMaxLength)
+	employees = models.CharField(max_length=charFieldMaxLength)
+	locations = models.CharField(max_length=charFieldMaxLength)
+	# Link to their logo
+	image_logo = models.CharField(max_length=charFieldMaxLength) 
+	description = models.CharField(max_length=charFieldMaxLength)
 
+class Sponsor(models.Model):
+	user = models.ForeignKey(User)
+	organization = models.ForeignKey(Organization)
