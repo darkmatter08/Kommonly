@@ -41,9 +41,10 @@ def newEvent(request):
 	if request.method != 'POST':
 		return HttpResponseBadRequest()
 	eventForm = EventForm(request.POST)
-	# TODO change the organizer to the currently logged in user. 
-	newEvent = Event(organizer=Organizer.objects.get(email="sj@mit.edu"), event_date=eventForm.cleaned_data['event_date'], name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'])
-	newEvent.save()
+	if eventForm.is_valid():
+		# TODO change the organizer to the currently logged in user. 
+		newEvent = Event(organizer=Organizer.objects.get(email="sj@mit.edu"), event_date=eventForm.cleaned_data['event_date'], name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'])
+		newEvent.save()
 	return HttpResponseRedirect('/organizer/home')
 	# TODO return as JSON so the client can update the page dynamically.
 	# or have the client do an AJAX to get the data and update the table automatically
