@@ -30,7 +30,8 @@ def organizer_signup(request):
         password  = organizerForm.cleaned_data['password']
         email = organizerForm.cleaned_data['email']
         organization = organizerForm.cleaned_data['organization']
-        user = User.objects.create_user(first_name=fname, last_name=lname, username=email, email=email)
+        user = User.objects.create_user(first_name=fname, last_name=lname, username=email, email=email, password=password)
+        user.backend='django.contrib.auth.backends.ModelBackend' 
         Organizer.objects.create(user=user, organization=organization)
 
     return HttpResponseRedirect('/organizer/home')
