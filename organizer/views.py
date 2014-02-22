@@ -7,7 +7,7 @@ from organizer.models import *
 from organizer.forms import *
 from sponsor.models import *
 from sponsor.forms import *
-
+from events.forms import *
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -83,7 +83,10 @@ def organizer_home(request):
     eventTemplateVar = []
     if len(allEvents) != 0:
         for myEvent in allEvents:
+            picture = Event_Image.objects.filter(event=myEvent)
             eventDict = {"name": myEvent.name, "date": myEvent.create_date, "description": myEvent.description}
+            if len(picture) != 0:
+                eventDict["picture"] = "/static/assets/" + picture[0].pic.url.split("/")[-1]
             eventTemplateVar.append(eventDict)
     context = { "organizer": currentOrganizer, "events": eventTemplateVar, "newEvent": EventForm()}
     return render(request, 'organizer/organizer_dashboard.html', context)
@@ -93,11 +96,17 @@ def organizer_home(request):
 def newEvent(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
+    currentOrganizer = Organizer.objects.get(user=request.user)
     eventForm = EventForm(request.POST)
     if eventForm.is_valid():
         # TODO change the organizer to the currently logged in user. 
-        newEvent = Event(organizer=Organizer.objects.get(email="sj@mit.edu"), event_date=eventForm.cleaned_data['event_date'], name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'])
+        newEvent = Event(organizer=currentOrganizer, event_date=eventForm.cleaned_data['event_date'], name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'])
         newEvent.save()
+        imageForm = ImageUploadForm(request.POST, request.FILES)
+        if imageForm.is_valid():
+            img = Event_Image.objects.create(pic=imageForm.cleaned_data['image'], event=newEvent)
+            img.save()
+            # return HttpResponse('image upload success')
     return HttpResponseRedirect('/organizer/home')
     # TODO return as JSON so the client can update the page dynamically.
     # or have the client do an AJAX to get the data and update the table automatically
