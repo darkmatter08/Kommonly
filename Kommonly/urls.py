@@ -14,11 +14,14 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'Kommonly.views.home'),
+    (r'^/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+
 )
 
 urlpatterns += patterns('organizer.views',
     # url(r'^staff/interview_status/$', 'interview_status'),
     url(r'^api/organizer/signup$', 'organizer_signup'),
+    url(r'^api/organizer/login$', 'organizer_login'),
     url(r'^organizer/home$', 'organizer_home'),
     url(r'^api/organizer/newEvent$', 'newEvent'),
     url(r'^dashboard/$', 'show_dashboard'),

@@ -8,7 +8,7 @@ from django import forms
 
 # from sponsor import *
 from sponsor.models import *
-
+from events.models import *
 class EventForm(forms.ModelForm):
 	class Meta:
 		model = Event

@@ -11,6 +11,9 @@ from django.shortcuts import render, render_to_response, get_object_or_404, get_
 
 from organizer.forms import * 
 
+from django.contrib.auth.models import User
+
 def home(request):
-	form = OrganizerForm()
-	return render(request, 'temp_home.html', {'form': form})
+	SignUpform = UserSignUpForm()
+	LoginForm  = UserLoginForm()
+	return render(request, 'homepage.html', {'signupForm': SignUpform, 'loginForm': LoginForm})
