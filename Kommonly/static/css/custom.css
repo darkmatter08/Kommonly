@@ -26,3 +26,57 @@
 	opacity:0.1;
 	z-index: 10;
 }
+
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+#container {
+   min-height:100%;
+   position:relative;
+}
+#header {
+   background:#ff8726;
+   height: 40px;
+   padding-left: 30px;
+}
+#body {
+   padding:40px;
+   padding-bottom:60px;   /* Height of the footer */
+}
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;   /* Height of the footer */
+   background:#F8F8F8;
+
+}
+#headerLogo {
+	margin-top: 5px;
+	height: 30px;
+}
+#footerLogo {
+	height: 60px;
+	padding-bottom: 5px;
+	padding-left:30px;
+}
+.createNewEventButton {
+	border: 1px solid #F8F8F8 ;
+	border-radius: 2px;
+	text-align: center;
+	padding:		10px 20px !important;
+	font-size:		14px !important;
+	background-color:	white;
+  	margin-left:50%;
+  	margin-right:50%;
+}
+#yourEvents {
+	height: 100px;
+	font-size: 40px;
+}
+#events {
+	background-color: #F8F8F8;
+}

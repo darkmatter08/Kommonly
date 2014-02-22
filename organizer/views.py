@@ -114,6 +114,3 @@ def getAllEvents(request):
     for currentEvent in Event.objects.all():
         allEvents.append({"event_date" : currentEvent.event_date.strftime('%Y-%m-%dT%H:%M:%S'), "name" : currentEvent.name, "description" : currentEvent.description})
     return HttpResponse(json.dumps(allEvents), content_type="application/json")
-
-
-
