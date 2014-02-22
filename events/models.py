@@ -11,6 +11,7 @@ class Event(models.Model):
 	event_date = models.DateTimeField()
 	name = models.CharField(max_length=charFieldMaxLength)
 	description = models.CharField(max_length=charFieldMaxLength)
+	expected_reach = models.CharField(max_length=charFieldMaxLength)
 	# seeking_type = # O2M with Seeking_type_Event
 
 class Event_Sponsorship(models.Model):
@@ -49,3 +50,7 @@ class Event_Sponsorship_Type(models.Model):
 		(FOOD, "Food"),
 	)
 	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
+
+class Event_Image(models.Model):
+	pic = models.ImageField(upload_to = 'assets/', default = 'assets/None/no-img.jpg')
+	event = models.ForeignKey(Event)

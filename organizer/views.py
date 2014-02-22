@@ -11,7 +11,7 @@ from sponsor.forms import *
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -33,6 +33,21 @@ def organizer_signup(request):
         user = User.objects.create_user(first_name=fname, last_name=lname, username=email, email=email, password=password)
         user.backend='django.contrib.auth.backends.ModelBackend' 
         Organizer.objects.create(user=user, organization=organization)
+        # Check their validity
+        user = authenticate(username=username, password=password)
+        print user
+        print "IM HERE - new signup"
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                # Redirect to a success page.
+                return HttpResponseRedirect('/organizer/home')
+            # TODO: add in an error page - try logging in again
+            else:
+                return HttpResponseRedirect('/')
+        else:
+            #TODO: Return an 'invalid login' error message.
+            return HttpResponseRedirect('/')
 
     return HttpResponseRedirect('/organizer/home')
 
@@ -47,7 +62,6 @@ def organizer_login(request):
         username = request.POST['email']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-
         print user
         print "IM HERE"
         if user is not None:
@@ -56,20 +70,22 @@ def organizer_login(request):
                 # Redirect to a success page.
                 return HttpResponseRedirect('/organizer/home')
             else:
+                # TODO: add in an error page - try logging in again
                 return HttpResponseRedirect('/')
         else:
             #TODO: Return an 'invalid login' error message.
             return HttpResponseRedirect('/')
     
-
+@login_required
 def organizer_home(request):
+    currentOrganizer = Organizer.objects.get(user=request.user)
     allEvents = Event.objects.all()
     eventTemplateVar = []
     if len(allEvents) != 0:
         for myEvent in allEvents:
             eventDict = {"name": myEvent.name, "date": myEvent.create_date, "description": myEvent.description}
             eventTemplateVar.append(eventDict)
-    context = { "organizer": {"name_user": "shawn"}, "events": eventTemplateVar, "newEvent": EventForm()}
+    context = { "organizer": currentOrganizer, "events": eventTemplateVar, "newEvent": EventForm()}
     return render(request, 'organizer/organizer_dashboard.html', context)
 
 # POST request, AJAX method.
