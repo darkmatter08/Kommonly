@@ -34,7 +34,7 @@ def organizer_signup(request):
         user.backend='django.contrib.auth.backends.ModelBackend' 
         Organizer.objects.create(user=user, organization=organization)
         # Check their validity
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=email, password=password)
         print user
         print "IM HERE - new signup"
         if user is not None:
