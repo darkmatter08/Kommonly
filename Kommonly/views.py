@@ -1,7 +1,3 @@
-# Shawn Jain 
-# 2/3/2014
-# Kommonly project
-
 from django.template.loader import get_template
 from django.template import *
 from django.http import *
@@ -12,5 +8,5 @@ from django.shortcuts import render, render_to_response, get_object_or_404, get_
 from organizer.forms import * 
 
 def home(request):
-	form = OrganizerForm()
-	return render(request, 'temp_home.html', {'form': form})
+	# form = OrganizerForm()
+	return render(request, 'homepage.html')

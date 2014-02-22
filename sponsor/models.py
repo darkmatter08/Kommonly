@@ -12,7 +12,8 @@ class Sponsor(models.Model):
 	organization = models.CharField(max_length=charFieldMaxLength)
 	join_date = models.DateTimeField(auto_now_add=True)
 	# M2M Sponsors and events, through Sponsor_Event
-	backed_event = models.ManyToManyField('Event', through='Sponsor_Event')
+	# backed_event = models.ManyToManyField('Event', through='Sponsor_Event')
+	backed_event = models.ManyToManyField('Event')
 
 class Event(models.Model):
 	#M2O Events => Organizer
@@ -22,6 +23,7 @@ class Event(models.Model):
 	name = models.CharField(max_length=charFieldMaxLength)
 	description = models.CharField(max_length=charFieldMaxLength)
 	# seeking_type = # O2M with Seeking_type_Event
+	tier = models.CharField(max_length=charFieldMaxLength)
 
 class Sponsor_Event(models.Model):
 	sponsor = models.ForeignKey(Sponsor)
