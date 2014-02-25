@@ -29,6 +29,8 @@ urlpatterns += patterns('organizer.views',
     url(r'^signup$', 'signup'),
 )
 urlpatterns += patterns('sponsor.views',
-    # url(r'^staff/interview_status/$', 'interview_status'),
     url(r'^company_dashboard/$', 'show_company_dashbaord'),
+)
+urlpatterns += patterns('events.views',
+    url(r'^events/create$', 'create_event'),
 )
