@@ -53,8 +53,8 @@ body {
    padding-bottom:60px;   /* Height of the footer */
 }
 #footer {
-   position:absolute;
-   bottom:0;
+   /*position:absolute;*/
+   /*bottom:0;*/
    width:100%;
    height:60px;   /* Height of the footer */
    background:#F8F8F8;
@@ -140,7 +140,7 @@ body {
 #below_fold {
 	margin-top: 60px;
 }
-.gsButton {
+.orangeButton {
 	color: white;
 	background-color: #ff8726;
 	padding:7px;
@@ -157,5 +157,37 @@ body {
 }
 .gsButton a:link a:hover a:visited {
 	text-decoration: none
+}
+
+/* overriding bootstrap*/
+.featurette-divider {
+	margin: 50px 0 ;
+	border-top: 2px solid #ff8726;
+}
+.featurette-heading {
+	font-weight: 100 !important;
+}
+.footer_options {
+	list-style-type: none;
+	margin: 0;
+	padding: 5px;
+	display: inline;
+	text-align: center;
+}
+.footer_options  li {
+	float:right;
+	font-size: 16px;
+	padding-top: 10px;
+	width: 20%;
+	text-align: center;
+	display: inline-block;
+	font-weight: 100;
+	margin-left: 5%;
+	
+
+}
+
+#foption {
+
 }
 
