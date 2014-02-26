@@ -14,28 +14,16 @@
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/custom.css" rel="stylesheet">
   	<style type="text/css" id="holderjs-style"></style>
-		<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 	
-	<script>
-	// $(document).ready(function(){
-	// 	$.post("/api/organizer/getAllEvents", function(data){
-	// 		for (var myIndex in data) {
-	// 			var myEvent = data[myIndex]
-	// 			$('#ajaxTable tr:last').after('<tr>'+'<td>'+ myEvent.name + '</td>'+'<td>'+ myEvent.event_date + '</td>' +'<td>'+ myEvent.description + '</td>'+'</tr>');
-	// 		}
-	// 	});
-	// });	
-	</script>
 </head>
 
 <body>
 		
 	<div id="container">
-		<div id="header">
-			{% include "header.html" %}
-		</div>
+		{% include "header.html" %}
 		
 		<div id="body">
 			{% block content %}

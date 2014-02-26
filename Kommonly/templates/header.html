@@ -1,1 +1,12 @@
-<p><img id="headerLogo" src="/static/header_logo.png"> 
+<div id="header" >
+	
+	<div id="header_logo">
+		<img id="headerLogo" src="/static/kommonly-logo-white.png"> 
+	</div>
+	<div id="user_options" >
+		{% if user.is_authenticated %}
+			<a style="top: 5;" href="/logout">Log out</a>
+		{% endif%}
+
+	</div>
+</div>

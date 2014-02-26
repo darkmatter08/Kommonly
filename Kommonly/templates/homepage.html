@@ -22,10 +22,10 @@
 			<div class="kommonlyHeader">
 					
 					<div id="menu">
-						<a href="/login" id="menubuttons">Log in</a> &nbsp;&nbsp;
-						<a href="/signup" id="menubuttons">Sign Up</a>
+						<a href="" data-toggle="modal" data-target="#modalpopup" id="menubuttons">Log in</a> &nbsp;&nbsp;
+						<a href="" data-toggle="modal" data-target="#modalpopup" id="menubuttons" id="menubuttons">Sign Up</a>
 					</div>
-					<img src="/static/logo.png" style="height: 70px;"> 
+					<img src="/static/kommonly-logo-large.png" style="height: 70px;"> 
 					<!-- <h1>Kommonly</h1> -->
 			</div>
 
@@ -35,8 +35,8 @@
 							Find sponsors to make your event stand out.
 						</div>
 
-						<div style="text-align:center">
-							<a href="" class="orangeButton" data-toggle="modal" data-target="#signup">
+						<div style="text-align:center" id="signupbutton">
+							<a href="" class="orangeButton" data-toggle="modal" data-target="#modalpopup">
 								Login or Sign Up
 							</a>
 						</div>
@@ -127,7 +127,7 @@
 		<!-- END FOOTER -->
 	 
 		<!-- POP UP MODAL-->
-		<div class="modal fade" id="signup">
+		<div class="modal fade" id="modalpopup">
 			<div class="modal-dialog">
 				<div class="modal-content">
 
@@ -175,6 +175,10 @@
 					<div class="modal-body">
 						
 						<form action="/api/organizer/signup" method="post">{% csrf_token %}
+							{% for field in signupForm %}
+								{{ field}}
+							{% endfor %}
+
 							{{ signupForm.as_p }}
 						<input type="submit" value="Submit" />
 						</form>

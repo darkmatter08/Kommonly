@@ -7,22 +7,37 @@
 
 {% block content %}
 		
+
 		<div id="yourEvents"> 
 			YOUR EVENTS
 		</div>
-			
-		<div id="events">
 
-		{% for event in events %}
-			<ul>
-				<li>{{ event.name }}</li>
-			</ul>
-		{% endfor %}
+		<div id="eventsContainer">
+				
+			<div id="events">
 
-		<a href="/events/create">
-    		<button class="createNewEventButton pagination-center">Create New Event </button>
-		</a>
-		
+			{% for event in events %}
+				<ul id="eventsList">
+					<li>
+						<span id="eventName">
+							<span><img src="/static/event_icon.png" style="height: 30px; padding-right: 10px;"></img></span>{{ event.name }}
+						</span>
+						<div id="eventControllers">
+							<a href="">Delete </a>
+							<a class="orangeButton" href=""> Edit Event</a>
+						</div>
+
+
+					</li>
+				</ul>
+			{% endfor %}
+				<div style="text-align:center" id="signupbutton">
+					<a href="" class="orangeButton">
+						Create New Event
+					</a>
+				</div>
+
+			</div>
 		</div>
 		<!-- <form action="/api/organizer/newEvent" method="post">
 		<table class="table">

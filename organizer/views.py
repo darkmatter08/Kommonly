@@ -9,7 +9,7 @@ from sponsor.models import *
 from sponsor.forms import *
 from events.forms import *
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
@@ -49,7 +49,7 @@ def organizer_signup(request):
             #TODO: Return an 'invalid login' error message.
             return HttpResponseRedirect('/')
 
-    return HttpResponseRedirect('/organizer/home')
+    return HttpResponseRedirect('/')
 
 
 def organizer_login(request):
@@ -75,6 +75,8 @@ def organizer_login(request):
         else:
             #TODO: Return an 'invalid login' error message.
             return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/')
     
 @login_required
 def organizer_home(request):
@@ -88,7 +90,8 @@ def organizer_home(request):
             if len(picture) != 0:
                 eventDict["picture"] = "/static/assets/" + picture[0].pic.url.split("/")[-1]
             eventTemplateVar.append(eventDict)
-    context = { "organizer": currentOrganizer, "events": eventTemplateVar, "newEvent": EventForm()}
+    context = { 'request': request, "organizer": currentOrganizer, "events": eventTemplateVar, "newEvent": EventForm()}
+    print request.user
     return render(request, 'organizer/organizer_dashboard.html', context)
 
 # POST request, AJAX method.
@@ -123,3 +126,7 @@ def getAllEvents(request):
     for currentEvent in Event.objects.all():
         allEvents.append({"event_date" : currentEvent.event_date.strftime('%Y-%m-%dT%H:%M:%S'), "name" : currentEvent.name, "description" : currentEvent.description})
     return HttpResponse(json.dumps(allEvents), content_type="application/json")
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/')
