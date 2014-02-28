@@ -59,6 +59,7 @@ body {
    width:100%;
    height:60px;   /* Height of the footer */
    background:#F8F8F8;
+   border-top: 1px solid #ff8726;
 
 }
 #headerLogo {
@@ -70,6 +71,44 @@ body {
 	padding-bottom: 5px;
 	padding-left:30px;
 }
+
+	
+div.logged-in ul {
+	list-style-type: none;
+	color: white;
+}
+div.logged-in li {
+	float: right;
+
+	width: 10%;
+	background-color: #FF9966;
+	overflow: hidden;
+	/*margin-right: 10px;*/
+	margin-left: 10px;
+	line-height:40px;
+	/*padding-left:10px;*/
+	width:86px;
+	height:40px;
+	top: 0;
+	right: 0;
+	text-align:center;
+	position: relative;
+	opacity: 0.8;
+
+}
+div.logged-in {
+	margin-top: 0px;
+	position: absolute;
+	display: inline-block;
+	width: 45%;
+	color: white;
+
+}
+div.logged-in .tab {
+	color: white;
+	text-decoration: none;
+}
+
 .createNewEventButton {
 	border: 1px solid #F8F8F8 ;
 	border-radius: 2px;
@@ -111,23 +150,38 @@ body {
 
 
 #eventsList li:hover {
-	background-color: #FFC299;
+	background-color: #F0F0F0;
 }
 
 #eventControllers {
-	display: inline;
-	position: relative;
-	float: left;
+	position: absolute;
+	display: inline-block;
 	color: blue;
+	width: 35%;
 }
 #eventName {
-	width: 75%;
+	width: 60%;
 	display: inline;
 	position: relative;
 	float: left;
 	font-size: 20px;
 	text-transform: uppercase;
 	font-weight: 100;
+}
+.eventoption {
+	float: right;
+	width: 10%;
+	overflow: hidden;
+	margin-left: 10px;
+	line-height:40px;
+	width:86px;
+	height:40px;
+	top: 0;
+	right: 0;
+	text-align:center;
+	position: relative;
+	opacity: 0.8;
+
 }
 .contentNavItem {
 	color: #00a0d1;
@@ -197,9 +251,11 @@ body {
         box-shadow: 0 0 1px gray;
 
 
-
 }
 
+div.signupbutton a {
+	text-decoration: none;
+}
 
 /* overriding bootstrap*/
 .featurette-divider {

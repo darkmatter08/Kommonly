@@ -14,6 +14,8 @@ from organizer.forms import *
 from django.contrib.auth.models import User
 
 def home(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/organizer/home')
 	SignUpform = UserSignUpForm()
 	LoginForm  = UserLoginForm()
 	return render(request, 'homepage.html', {'signupForm': SignUpform, 'loginForm': LoginForm})

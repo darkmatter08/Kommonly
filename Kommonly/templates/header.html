@@ -1,12 +1,21 @@
 <div id="header" >
 	
-	<div id="header_logo">
-		<img id="headerLogo" src="/static/kommonly-logo-white.png"> 
-	</div>
-	<div id="user_options" >
-		{% if user.is_authenticated %}
-			<a style="top: 5;" href="/logout">Log out</a>
-		{% endif%}
+		<a href="/">
+			<div id="header_logo">
 
+
+				<img id="headerLogo" src="/static/kommonly-logo-white.png"> 
+			</div>
+		<a> 
+
+	<div class="logged-in">
+		<ul>
+			<li class="logout">
+				<a class="tab" href="/logout">Logout</a>
+			</li>
+			<li class="dashboard">
+				<a class="tab" href="/organizer/home">Dashboard</a>
+			</li>
+		</ul>
 	</div>
 </div>

@@ -23,8 +23,8 @@
 							<span><img src="/static/event_icon.png" style="height: 30px; padding-right: 10px;"></img></span>{{ event.name }}
 						</span>
 						<div id="eventControllers">
-							<a href="">Delete </a>
-							<a class="orangeButton" href=""> Edit Event</a>
+							<a href="" class="eventoption">Delete </a>
+							<a class="eventoption" href=""> Edit Event</a>
 						</div>
 
 
@@ -32,7 +32,7 @@
 				</ul>
 			{% endfor %}
 				<div style="text-align:center" id="signupbutton">
-					<a href="" class="orangeButton">
+					<a href="/events/create" class="orangeButton" style="text-decoration:none;">
 						Create New Event
 					</a>
 				</div>
