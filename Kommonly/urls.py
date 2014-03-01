@@ -31,8 +31,8 @@ urlpatterns += patterns('organizer.views',
 
 )
 urlpatterns += patterns('sponsor.views',
-    url(r'^company_dashboard/$', 'show_company_dashbaord'),
-    url(r'^companies$', 'get_companies'),
+    url(r'^business_dashboard/$', 'show_business_dashbaord'),
+    url(r'^businesses$', 'get_businesses'),
 
 )
 urlpatterns += patterns('events.views',
