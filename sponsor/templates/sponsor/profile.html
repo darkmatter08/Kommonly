@@ -94,7 +94,7 @@
 
 					<div class="modal-body">
 
-						<form action="/businesses/{{business.id}}/contact" method="post">
+						<form action="#" method="post" id="contact">
 							{% 	csrf_token %}
 							{{ form.as_p}}
 							<input class="orangeButton" type="submit" value="Send" />
@@ -110,6 +110,24 @@
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		{% load staticfiles %}
+		<script>
+			$("#contact").submit(function() {
+
+	    	var url = '/businesses/{{business.id}}/contact'; 
+
+		    $.ajax({
+		           type: "POST",
+		           url: url,
+		           data: $("#contact").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		               alert(data); // show response from the php script.
+		           }
+		    });
+		    $('#modalpopup').modal('hide')
+		    return false; // avoid to execute the actual submit of the form.
+		});
+		</script>
 		<script src="{% static 'js/jquery.js' %}"></script>
 		<script src="{% static 'js/jquery.js' %}"></script>
 		<script src="{% static 'js/bootstrap.js' %}"></script>
