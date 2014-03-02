@@ -7,7 +7,7 @@ def show_business_dashboard(request):
 	print "Hello there. This is the organizer page"
 	return render(request, 'sponsor/dashboard.html')
 
-def get_businesses(request):
+def businesses(request):
 	all_businesses = Organization.objects.order_by('id')
 	template = loader.get_template('sponsor/index.html')
 	context = RequestContext(request, {
@@ -15,7 +15,7 @@ def get_businesses(request):
 	})
 	return HttpResponse(template.render(context))
 
-def get_business_profile(request, business_name):
+def business_profile(request, business_name):
 	try:
 		business = Organization.objects.get(name=business_name)
 	except Organization.DoesNotExist:

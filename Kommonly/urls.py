@@ -1,7 +1,3 @@
-# Shawn Jain 
-# 2/3/2014
-# Kommonly project
-
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
@@ -11,7 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'Kommonly.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+    url(r'^businesses/', include('sponsor.urls',namespace="sponsor", app_name="sponsor")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'Kommonly.views.home'),
     (r'^/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
@@ -30,14 +26,7 @@ urlpatterns += patterns('organizer.views',
     url(r'^logout$', 'logout'),
 
 )
-urlpatterns += patterns('sponsor.views',
-    url(r'^business_dashboard/$', 'show_business_dashbaord'),
-    # ex: /businesses
-    url(r'^businesses$', 'get_businesses'),
-    # ex: businesses/google/
-    url(r'^businesses/(?P<business_name>\w+)/$','get_business_profile'),
 
-)
 urlpatterns += patterns('events.views',
     url(r'^events/create$', 'create_event'),
 )
