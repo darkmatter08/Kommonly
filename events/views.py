@@ -3,6 +3,8 @@ from organizer.models import *
 from events.models import *
 from events.forms import *
 # Create your views here.
+def event_profile(request):
+    return render(request, 'events/profile.html')
 def create_event(request):
     return event_view(request=request)
 
