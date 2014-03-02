@@ -1,9 +1,5 @@
-# Shawn Jain 
-# 2/3/2014
-# Kommonly project
-
 from django.conf.urls import patterns, include, url
-
+import settings
 from django.contrib import admin
 admin.autodiscover()
 
@@ -11,11 +7,12 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'Kommonly.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+    url(r'^businesses/', include('sponsor.urls',namespace="sponsor", app_name="sponsor")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'Kommonly.views.home'),
     (r'^/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
-
+    (r'^/assets/(?P<path>.*)$', 'django.views.static.serve',
+                 {'document_root': settings.MEDIA_ROOT}),
 )
 
 urlpatterns += patterns('organizer.views',
@@ -30,11 +27,7 @@ urlpatterns += patterns('organizer.views',
     url(r'^logout$', 'logout'),
 
 )
-urlpatterns += patterns('sponsor.views',
-    url(r'^company_dashboard/$', 'show_company_dashbaord'),
-    url(r'^companies$', 'get_companies'),
 
-)
 urlpatterns += patterns('events.views',
     url(r'^events/create$', 'create_event'),
 )
