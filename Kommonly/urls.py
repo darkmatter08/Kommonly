@@ -32,7 +32,10 @@ urlpatterns += patterns('organizer.views',
 )
 urlpatterns += patterns('sponsor.views',
     url(r'^business_dashboard/$', 'show_business_dashbaord'),
+    # ex: /businesses
     url(r'^businesses$', 'get_businesses'),
+    # ex: businesses/google/
+    url(r'^businesses/(?P<business_name>\w+)/$','get_business_profile'),
 
 )
 urlpatterns += patterns('events.views',

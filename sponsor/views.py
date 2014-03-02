@@ -3,8 +3,6 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from sponsor.models import *
 
-# Create your views here.
-# Create your views here.
 def show_business_dashboard(request):
 	print "Hello there. This is the organizer page"
 	return render(request, 'sponsor/dashboard.html')
@@ -16,4 +14,11 @@ def get_businesses(request):
 		'all_businesses': all_businesses,
 	})
 	return HttpResponse(template.render(context))
+
+def get_business_profile(request, business_name):
+	try:
+		business = Organization.objects.get(name=business_name)
+	except Organization.DoesNotExist:
+		raise Http404
+	return render(request, 'sponsor/profile.html', {'business':business})
 	
