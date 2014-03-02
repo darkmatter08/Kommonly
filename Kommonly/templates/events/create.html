@@ -28,8 +28,9 @@
 	        <p><input id="id_image" type="file" class="" name="image"></p>
 	        <table>
 	            {{ newEvent.as_table }}
+	            {{ newEvent_Sponsorship_PreferencesForm.as_table }}
 	        </table>
-	        <!-- {% csrf_token %}
+	        {% csrf_token %}
         	<input type="submit" value="Submit">
     	</form> 
 {% endblock %}

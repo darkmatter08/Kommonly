@@ -14,5 +14,5 @@ def create_event(request):
             if len(picture) != 0:
                 eventDict["picture"] = "/static/assets/" + picture[0].pic.url.split("/")[-1]
             eventTemplateVar.append(eventDict)
-    context = { "organizer": currentOrganizer, "events": eventTemplateVar, "newEvent": EventForm()}
+    context = { "organizer": currentOrganizer, "events": eventTemplateVar, "newEvent": EventForm(), "newEvent_Sponsorship_PreferencesForm": Event_Sponsorship_PreferencesForm()}
     return render(request, 'events/create.html', context)
