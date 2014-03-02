@@ -59,3 +59,13 @@
 	text-align: center;
 
 }
+#contactButton {
+	/*float: right;*/
+	margin: 0 auto;
+	/*margin-right: 7%;*/
+
+}
+#contactButton a:hover{
+	text-decoration:none;
+
+}

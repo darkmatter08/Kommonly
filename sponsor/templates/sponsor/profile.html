@@ -5,6 +5,7 @@
 
 <div class="businessName">
 	{{business.name}}
+
 </div>
 
 <div class="aboutBusiness">
@@ -18,32 +19,52 @@
 		<div id="businessTextDescription">
 			{{ business.description}}
 		</div>
-		
-
 	</div>
 
 	<div class="businessDetails">
 		<h4>Company Details: </h4>
 		<hr>
 		<div class="detailBox" id="businessOverview">
-			10000 employees <br/>
-			on Kommonly since August 2014 <br/>
+			<font color="red">{{business.employees}}</font> employees <br/>
+			on Kommonly since <font color="red">February 2014 </font><br/>
 		</div>
 		<div class="detailBox" id="sponsorshipTypes">
 			Available to Sponsor <br/><br/>
 			
 			<div id="iconBox">
-				<div id="img1" style="border-right: 1px solid #F0F0F0;"><img src="/static/assets/sponsorshipIcons/venue-green.png"></img>
-				<p>Venue</p>
+				
+				<div id="img1" style="border-right: 1px solid #F0F0F0;">
+					{% if "Venue" in funding_types %}
+					<img src="/static/assets/sponsorshipIcons/venue-green.png"></img>
+					{% else %}
+					<img src="/static/assets/sponsorshipIcons/venue-gray.png"></img>
+					{% endif %}
+					<p>Venue</p>
 				</div>
-				<div id="img1" style="border-right: 1px solid #F0F0F0;"><img src="/static/assets/sponsorshipIcons/money-gray.png"></img>
-				<p>Money</p>
+				<div id="img1" style="border-right: 1px solid #F0F0F0;">
+					{% if "Funding" in funding_types %}
+					<img src="/static/assets/sponsorshipIcons/money-green.png"></img>
+					{% else %}
+					<img src="/static/assets/sponsorshipIcons/money-gray.png"></img>
+					{% endif %}
+					<p>Money</p>
 				</div>
-				<div id="img1" style="border-right: 1px solid #F0F0F0;"><img src="/static/assets/sponsorshipIcons/swag-green.png"></img>
-				<p>Swag</p>
+				<div id="img1" style="border-right: 1px solid #F0F0F0;">
+
+					{% if "Swag" in funding_types %}
+					<img src="/static/assets/sponsorshipIcons/swag-green.png"></img>
+					{% else %}
+					<img src="/static/assets/sponsorshipIcons/swag-gray.png"></img>
+					{% endif %}
+					<p>Swag</p>
 				</div>
-				<div id="img1"><img src="/static/assets/sponsorshipIcons/people-gray.png"></img>
-				<p>People</p>
+				<div id="img1">
+					{% if "People" in funding_types %}
+					<img src="/static/assets/sponsorshipIcons/people-green.png"></img>
+					{% else %}
+					<img src="/static/assets/sponsorshipIcons/people-gray.png"></img>
+					{% endif %}
+					<p>People</p>
 				</div>
 				
 			</div>
@@ -53,8 +74,12 @@
 			{{ business.location }}
 		</div>
 		
+		<div id="contactButton" >
+		<a class="orangeButton" href="/businesses/{{business.id}}/contact">Contact</a>
+	</div>
 		
 	</div>
-	
+
+
 </div>
 {% endblock %}
