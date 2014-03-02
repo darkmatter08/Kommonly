@@ -1,6 +1,24 @@
 <div class="profile">
 	{{business.name}}
-	<p>
-		{{ business.description }}
-	</p>
+	<div class="left">
+		<div>
+		{% load staticfiles %}
+		<img src="{% static 'assets/businesses/' %}{{business.id}}.jpg" alt="{business.name} logo" class="business" style="height:100px"/>
+				</a>
+		</div>
+		<div>{{ business.description }}</div>
+	</div>
+	<div class="right">
+		<div>
+			{{business.employees}}
+			<p>On Kommonly since business.timestamp </p>
+		</div>
+		<div>
+			Available to sponsor
+			...
+		</div>
+		<div>
+			<b>Location:</b>business.address
+		</div>
+	</div>
 </div>

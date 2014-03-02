@@ -15,9 +15,9 @@ def businesses(request):
 	})
 	return HttpResponse(template.render(context))
 
-def business_profile(request, business_name):
+def business_profile(request, business_id):
 	try:
-		business = Organization.objects.get(name=business_name)
+		business = Organization.objects.get(id=business_id)
 	except Organization.DoesNotExist:
 		raise Http404
 	return render(request, 'sponsor/profile.html', {'business':business})
