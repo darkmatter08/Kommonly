@@ -5,6 +5,6 @@ urlpatterns = patterns('sponsor.views',
     # ex: /businesses
     url(r'^$', 'businesses', name="businesses"),
     # ex: businesses/google/
-    url(r'^(?P<business_name>\w+)/$','business_profile', name='profile'),
+    url(r'^(?P<business_id>\w+)/$','business_profile', name='profile'),
 
 )
