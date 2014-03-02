@@ -81,15 +81,15 @@ def organizer_login(request):
 @login_required
 def organizer_home(request):
     currentOrganizer = Organizer.objects.get(user=request.user)
-    allEvents = Event.objects.all()
-    eventTemplateVar = []
-    if len(allEvents) != 0:
-        for myEvent in allEvents:
-            picture = Event_Image.objects.filter(event=myEvent)
-            eventDict = {"name": myEvent.name, "date": myEvent.create_date, "description": myEvent.description}
-            if len(picture) != 0:
-                eventDict["picture"] = "/static/assets/" + picture[0].pic.url.split("/")[-1]
-            eventTemplateVar.append(eventDict)
+    eventTemplateVar = Event.objects.filter(organizer=currentOrganizer)
+    # eventTemplateVar = allEvents
+    # if len(allEvents) != 0:
+    #     for myEvent in allEvents:
+    #         picture = Event_Image.objects.filter(event=myEvent)
+    #         eventDict = {"name": myEvent.name, "date": myEvent.create_date, "description": myEvent.description}
+    #         if len(picture) != 0:
+    #             eventDict["picture"] = "/static/assets/" + picture[0].pic.url.split("/")[-1]
+    #         eventTemplateVar.append(eventDict)
     context = { 'request': request, "organizer": currentOrganizer, "events": eventTemplateVar, "newEvent": EventForm()}
     print request.user
     return render(request, 'organizer/organizer_dashboard.html', context)
@@ -130,7 +130,10 @@ def newEvent(request):
         if imageForm.is_valid():
             img = Event_Image.objects.create(pic=imageForm.cleaned_data['image'], event=newEvent)
             img.save()
-    return HttpResponseRedirect('/organizer/home')
+        return HttpResponseRedirect('/organizer/home')
+    else:
+        context = { "organizer": currentOrganizer, "newEvent": eventForm, "newEvent_Sponsorship_PreferencesForm": Event_Sponsorship_Preferences_Form}
+        return render(request, 'events/create.html', context)
     # TODO return as JSON so the client can update the page dynamically.
     # or have the client do an AJAX to get the data and update the table automatically
     #return HttpResponse(json.dumps(eventForm.cleaned_data), content_type="application/json")
