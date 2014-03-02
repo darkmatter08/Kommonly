@@ -27,5 +27,5 @@ def edit_event(request, event_id):
     currentEvent = Event.objects.get(pk=event_id)
     eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description}
     eventForm = EventForm(eventData)
-    preferencesForm = Event_Sponsorship_PreferencesForm(preferencesData)
+    # preferencesForm = Event_Sponsorship_PreferencesForm(preferencesData)
     return event_view(request=request, eventForm=eventForm)
