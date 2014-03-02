@@ -14,22 +14,15 @@
 				<th>Date</th>
 				<th>Description</th>
 			</tr>
-			{% for event in events %}
-			<tr>
-				<td>{{ event.name }}</td>
-				<td>{{ event.date }}</td>
-				<td>{{ event.description }}</td>
-				<td><img src="{{ event.picture }}"></img><td>
-			</tr>
-			{% endfor %}
 		</table>
 
 		<form action="/api/organizer/newEvent" method="post" enctype="multipart/form-data">
 	        <p><input id="id_image" type="file" class="" name="image"></p>
 	        <table>
 	            {{ newEvent.as_table }}
+	            {{ newEvent_Sponsorship_PreferencesForm.as_table }}
 	        </table>
-	        <!-- {% csrf_token %}
+	        {% csrf_token %}
         	<input type="submit" value="Submit">
     	</form> 
 {% endblock %}
