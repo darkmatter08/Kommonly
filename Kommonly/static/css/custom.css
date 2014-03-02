@@ -96,6 +96,10 @@ div.logged-in li {
 	opacity: 0.8;
 
 }
+div.logged-in li:hover {
+	background-color: #ff8726;
+
+}
 div.logged-in {
 	margin-top: 0px;
 	position: absolute;
