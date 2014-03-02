@@ -2,6 +2,7 @@ from django.db import models
 
 from organizer.models import *
 # Create your models here.
+from django.utils import timezone
 
 charFieldMaxLength = 100
 
@@ -12,11 +13,14 @@ class Organization(models.Model):
 	email = models.CharField(max_length=charFieldMaxLength)
 	phone = models.CharField(max_length=charFieldMaxLength)
 	
+	contact_fname = models.CharField(max_length=charFieldMaxLength)
+	contact_lname = models.CharField(max_length=charFieldMaxLength)
 	# Link to their logo
 	image_logo = models.CharField(max_length=charFieldMaxLength) 
 	description = models.CharField(max_length=3000)
 	website = models.CharField(max_length=charFieldMaxLength)
-
+	created_at  = models.DateField(default=timezone.now)
+	
 class Sponsor(models.Model):
 	user = models.ForeignKey(User)
 	organization = models.ForeignKey(Organization)
