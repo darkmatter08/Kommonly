@@ -1,0 +1,16 @@
+<div class="business">
+	<h1>Businesses</h1>
+	<ul>
+		{% for business in all_businesses %}
+			<li>
+				<!-- TODO: Fix hardcoded url-->
+				<a href="
+				/businesses/{{business.name}}">{{ business.name }} 
+				{% load staticfiles %}
+				<img src="{% static 'assets/businesses/' %}{{business.id}}.jpg" alt="{business.name} logo" class="business" style="height:100px"/>
+				</a>
+
+			</li>
+		{% endfor %}
+	</ul>
+</div>
