@@ -5,6 +5,7 @@ from sponsor.models import *
 from organizer.models import *
 from django.core.mail import send_mail
 from django import forms
+from events.models import *
 
 def show_business_dashboard(request):
 	print "Hello there. This is the organizer page"
@@ -27,8 +28,18 @@ def business_profile(request, business_id):
 			sponsorship_types.append(Sponsor_types.objects.get(id=type.funding_type_id).funding_type)
 	except Organization.DoesNotExist:
 		raise Http404
-	name = request.user.first_name if request.user.is_authenticated() else "<your name>"
-	data = {'subject': business.name + " sponsorship for event", 'message':"Dear " + business.contact_fname + ', I am ' + request.user.first_name + 'and am putting on an event on ___','organizer_email':request.user.email}
+	name = "<your name>"
+	eventdate = "<event date>"
+	eventname = "<event name>"
+	if request.user.is_authenticated():
+		name = request.user.first_name 
+		event = None
+		if len(Event.objects.filter(organizer_id=request.user.id)) > 0:
+			eventdate = Event.objects.filter(organizer_id=request.user.id)[0].event_date
+			eventname = Event.objects.filter(organizer_id=request.user.id)[0].name
+		
+	message = "Dear " + business.contact_fname + ', I am ' + name + ' and am putting on an event on ' + eventdate + " called " + eventname + ". We would love to have you sponsor our organization with either money, food, swag or possibly a venue. In exchange, our organization, " + Organizer.objects.get(user_id=request.user.id).organization + ", will..."
+	data = {'subject': business.name + " sponsorship for event", 'message':message,'organizer_email':request.user.email}
 	return render(request, 'sponsor/profile.html', {'business':business, 'funding_types':sponsorship_types, 'organizer':request.user, 'form':ContactForm(data)})
 
 class ContactForm(forms.Form):
