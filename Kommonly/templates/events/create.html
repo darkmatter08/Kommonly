@@ -14,14 +14,6 @@
 				<th>Date</th>
 				<th>Description</th>
 			</tr>
-			{% for event in events %}
-			<tr>
-				<td>{{ event.name }}</td>
-				<td>{{ event.date }}</td>
-				<td>{{ event.description }}</td>
-				<td><img src="{{ event.picture }}"></img><td>
-			</tr>
-			{% endfor %}
 		</table>
 
 		<form action="/api/organizer/newEvent" method="post" enctype="multipart/form-data">

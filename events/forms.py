@@ -29,7 +29,7 @@ class Event_Sponsorship_PreferencesForm(forms.Form):
 	sponsorship_type_choices_inv = dict(Event_Sponsorship_Preferences.sponsorship_type_choices)
 	for number, item in Event_Sponsorship_Preferences.sponsorship_type_choices:
 		exec(item + " = forms.BooleanField(required=False)")
-		exec(item + "_desc = forms.CharField()")
+		exec(item + "_desc = forms.CharField(required=False)")
 	# sponsorship_type_choices = {v:k for k, v in sponsorship_type_choices_inv.items()}
 	# sponsorship_type_choices["Funds"]
 	# funds = forms.BooleanField(required=False)
