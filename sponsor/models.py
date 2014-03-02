@@ -11,7 +11,9 @@ class Organization(models.Model):
 	locations = models.CharField(max_length=charFieldMaxLength)
 	# Link to their logo
 	image_logo = models.CharField(max_length=charFieldMaxLength) 
-	description = models.CharField(max_length=charFieldMaxLength)
+	description = models.CharField(max_length=250)
+	site = models.CharField(max_length=charFieldMaxLength)
+
 
 class Sponsor(models.Model):
 	user = models.ForeignKey(User)
