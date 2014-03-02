@@ -1,3 +1,7 @@
+{% extends "organizer/layout.html" %}
+
+{% block content %}
+
 <div class="profile">
 	{{business.name}}
 	<div class="left">
@@ -25,8 +29,42 @@
 		</div>
 	</div>
 	<div>
-		<a href="/businesses/{{business.id}}/contact">Contact</a>
+		<a href="" class="orangeButton" data-toggle="modal" data-target="#modalpopup">
+			CONTACT
+		</a>
 	</div>
+
+	<!-- POP UP MODAL-->
+		<div class="modal fade" id="modalpopup">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					 <div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        				<h4 class="modal-title">Contact {{business.name}}</h4>
+     				 </div>
+
+					<div class="modal-body">
+
+						<form action="/businesses/{{business.id}}/contact" method="post">
+							{% 	csrf_token %}
+							{{ form.as_p}}
+							<input class="orangeButton" type="submit" value="Send" />
+						</form>
+					</div><!--end modal-body-->
+	    		</div><!-- /.modal-content -->
+	  		</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	
+
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="{% static 'js/jquery.js' %}"></script>
+		<script src="{% static 'js/jquery.js' %}"></script>
+		<script src="{% static 'js/bootstrap.js' %}"></script>
+		<script src="{% static 'js/docs.js' %}"></script>
 
 
 </div>
+{% endblock %}
