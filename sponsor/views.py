@@ -15,10 +15,20 @@ def businesses(request):
 	})
 	return HttpResponse(template.render(context))
 
-def business_profile(request, business_name):
+def business_profile(request, business_id):
 	try:
-		business = Organization.objects.get(name=business_name)
+		business = Organization.objects.get(id=business_id)
+		funding_types = Sponsor_types_organization.objects.filter(organization_id=business_id)
+		sponsorship_types = []
+		for type in funding_types:
+			
+			sponsorship_types.append(Sponsor_types.objects.get(id=type.funding_type_id))
 	except Organization.DoesNotExist:
 		raise Http404
-	return render(request, 'sponsor/profile.html', {'business':business})
+	return render(request, 'sponsor/profile.html', {'business':business, 'funding_types':sponsorship_types})
 	
+def contact(request, business_id):
+	if request.user.is_authenticated():
+		return HttpResponse("user exists")
+	else:
+		return HttpResponse("Login required to contact businesses")
