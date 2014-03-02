@@ -14,11 +14,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 
-
-def show_dashboard(request):
-    print "Hello there. This is the organizer page"
-    return render(request, 'organizer/temp_home.html')
-
 def organizer_signup(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
@@ -35,8 +30,6 @@ def organizer_signup(request):
         Organizer.objects.create(user=user, organization=organization)
         # Check their validity
         user = authenticate(username=email, password=password)
-        print user
-        print "IM HERE - new signup"
         if user is not None:
             if user.is_active:
                 login(request, user)
@@ -62,8 +55,6 @@ def organizer_login(request):
         username = request.POST['email']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        print user
-        print "IM HERE"
         if user is not None:
             if user.is_active:
                 login(request, user)
@@ -94,7 +85,6 @@ def organizer_home(request):
     print request.user
     return render(request, 'organizer/organizer_dashboard.html', context)
 
-# POST request, AJAX method.
 @csrf_exempt
 def newEvent(request):
     if request.method != 'POST':

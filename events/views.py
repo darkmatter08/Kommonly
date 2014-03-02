@@ -16,3 +16,7 @@ def create_event(request):
             eventTemplateVar.append(eventDict)
     context = { "organizer": currentOrganizer, "events": eventTemplateVar, "newEvent": EventForm(), "newEvent_Sponsorship_PreferencesForm": Event_Sponsorship_PreferencesForm()}
     return render(request, 'events/create.html', context)
+
+
+def event_profile(request):
+    return render(request, 'events/profile.html')
