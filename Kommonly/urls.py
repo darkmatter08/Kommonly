@@ -28,6 +28,6 @@ urlpatterns += patterns('organizer.views',
 
 urlpatterns += patterns('events.views',
     url(r'^events/create$', 'create_event'),
-    url(r'^event/4$', 'event_profile'),
+    url(r'^events/(\d{1,5})$', 'event_profile'),
     url(r'^events/(\d{1,5})/edit$', 'edit_event'),
 )

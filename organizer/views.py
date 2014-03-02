@@ -128,6 +128,14 @@ def newEvent(request):
     # or have the client do an AJAX to get the data and update the table automatically
     #return HttpResponse(json.dumps(eventForm.cleaned_data), content_type="application/json")
 
+# Need to be sent the event ID to look it up.
+def editEvent(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest()
+    currentOrganizer = Organizer.objects.get(user=request.user)
+    eventForm = EventForm(request.POST)
+    return HttpResponse("Under Construction")
+
 # AJAX method to serialize all current events and return as JSON. 
 # Frontend can call this to load all current events. 
 @csrf_exempt

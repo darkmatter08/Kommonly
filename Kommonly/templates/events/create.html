@@ -6,8 +6,6 @@
 {% extends "organizer/layout.html"%}
 
 {% block content %}
-		
-		<form action="/api/organizer/newEvent" method="post">
 		<table class="table">
 			<tr>
 				<th>Name</th>
@@ -16,13 +14,18 @@
 			</tr>
 		</table>
 
+		
+		{% if edit %}
+		<form action="/api/organizer/editEvent" method="post" enctype="multipart/form-data">
+		{% else %}
 		<form action="/api/organizer/newEvent" method="post" enctype="multipart/form-data">
+		{% endif %}
 	        <p><input id="id_image" type="file" class="" name="image"></p>
 	        <table>
 	            {{ newEvent.as_table }}
 	            {{ newEvent_Sponsorship_PreferencesForm.as_table }}
 	        </table>
 	        {% csrf_token %}
-        	<input type="submit" value="Submit">
+        	<input type="submit" value="Save">
     	</form> 
 {% endblock %}
