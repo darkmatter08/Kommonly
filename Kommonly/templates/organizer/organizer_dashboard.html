@@ -18,17 +18,17 @@
 
 			{% for event in events %}
 				<ul id="eventsList">
-					<li>
-						<span id="eventName">
-							<span><img src="/static/event_icon.png" style="height: 30px; padding-right: 10px;"></img></span>{{ event.name }}
-						</span>
-						<div id="eventControllers">
-							<a href="" class="eventoption">Delete </a>
-							<a class="eventoption" href="/events/{{ event.pk}}/edit"> Edit Event</a>
-						</div>
-
-
-					</li>
+					<a href="/events/{{ event.pk }}">
+						<li>
+							<span id="eventName">
+								<span><img src="/static/event_icon.png" style="height: 30px; padding-right: 10px;"></img></span>{{ event.name }}
+							</span>
+							<div id="eventControllers">
+								<a class="eventoption" href="">Delete </a>
+								<a class="eventoption" href="/events/{{ event.pk }}/edit"> Edit Event</a>
+							</div>
+						</li>
+					</a>
 				</ul>
 			{% endfor %}
 				<div style="text-align:center" id="signupbutton">

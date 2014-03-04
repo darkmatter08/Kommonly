@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="eventName">
-	Lakeview Startup Meeting
+	{{ currentEvent.name}}
 
 </div>
 
@@ -18,7 +18,7 @@
 			<img src="/static/event_icon.png" style="width: 100%;"></img>
 		</div> -->
 		<div id="businessTextDescription">
-			Facebook, Inc. operates as a social networking company worldwide. It builds various tools that enable users to connect, share, discover, and communicate with each other on mobile devices and computers. The company's Facebook Platform is a set of deve
+			{{ currentEvent.description}}
 		</div>
 	</div>
 
@@ -27,8 +27,8 @@
 		<hr>
 		<div class="detailBox" id="businessOverview">
 			<font color="red">$500</font> funding needed <br/>
-			<font color="red">200 </font> Expected Reach<br/>
-			<font color="red">2/5/2014 </font> Event Date<br/>
+			<font color="red">{{ currentEvent.expected_reach }} </font> Expected Reach<br/>
+			<font color="red">{{ currentEvent.event_date }}</font> Event Date<br/>
 		</div>
 		<div class="detailBox" id="sponsorshipTypes">
 			Event Needs: <br/><br/>
@@ -77,7 +77,7 @@
 		</div>
 		
 		<div class="detailBox" id="aboutOrganizer">
-			Organized by Harvard Women in Computer Science
+			Organized by {{ currentEvent.organizer.organization}}
 		</div>
 		<div id="contactButton" >
 		<a class="orangeButton" href="/businesses/{{business.id}}/contact">Contact Sponsors</a>
