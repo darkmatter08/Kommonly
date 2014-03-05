@@ -101,9 +101,13 @@ def newEvent(request):
     if eventForm.is_valid() and Event_Sponsorship_Preferences_Form.is_valid():
         newEvent = Event(organizer=currentOrganizer, event_date=eventForm.cleaned_data['event_date'], name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'], expected_reach=eventForm.cleaned_data['expected_reach'])
         newEvent.save()
-        newEvent = Event.objects.all()[0]
+        # newEvent = Event.objects.all()[0]
         dat = Event_Sponsorship_Preferences_Form.cleaned_data
         print dat
+        imageForm = ImageUploadForm(request.POST, request.FILES)
+        if imageForm.is_valid():
+            img = Event_Image.objects.create(pic=imageForm.cleaned_data['image'], event=newEvent)
+            img.save()
         if dat[Event_Sponsorship_Preferences.sponsorship_type_choices[0][1]]:
             funds = Event_Sponsorship_Preferences(event=newEvent, sponsorship_type=Event_Sponsorship_Preferences.FUNDS, sponsorship_amount=dat["Funds_desc"])
             funds.save()
@@ -116,10 +120,7 @@ def newEvent(request):
         if dat[Event_Sponsorship_Preferences.sponsorship_type_choices[3][1]]:
             food = Event_Sponsorship_Preferences(event=newEvent, sponsorship_type=Event_Sponsorship_Preferences.FOOD, sponsorship_amount=dat["Food_desc"])
             food.save()
-        imageForm = ImageUploadForm(request.POST, request.FILES)
-        if imageForm.is_valid():
-            img = Event_Image.objects.create(pic=imageForm.cleaned_data['image'], event=newEvent)
-            img.save()
+        
         return HttpResponseRedirect('/organizer/home')
     else:
         context = { "organizer": currentOrganizer, "newEvent": eventForm, "newEvent_Sponsorship_PreferencesForm": Event_Sponsorship_Preferences_Form}
