@@ -6,9 +6,9 @@ from events.forms import *
 def event_profile(request, event_id):
     return render(request, 'events/profile.html', {"currentEvent": Event.objects.get(pk=event_id)})
 
-def event_view(request=None, eventForm=EventForm(), Event_Sponsorship_PreferencesForm=Event_Sponsorship_PreferencesForm(), edit=False):
+def event_view(request=None, eventForm=EventForm(), edit=False):
     currentOrganizer = Organizer.objects.get(user=request.user)
-    context = { "organizer": currentOrganizer, "newEvent": eventForm, "newEvent_Sponsorship_PreferencesForm": Event_Sponsorship_PreferencesForm, "edit": edit}
+    context = { "organizer": currentOrganizer, "newEvent": eventForm, "edit": edit}
     return render(request, 'events/create.html', context)
 
 # New Event

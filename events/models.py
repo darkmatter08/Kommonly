@@ -23,33 +23,34 @@ class Event_Sponsorship(models.Model):
 class Event_Sponsorship_Preferences(models.Model):
 	event = models.ForeignKey(Event)
 	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
-	FUNDS = 1
-	SPACE = 2
-	PEOPLE = 3
-	FOOD = 4
-	sponsorship_type_choices = (
-		(FUNDS, "Funds"),
-		(SPACE, "Space"),
-		(PEOPLE, "People"),
-		(FOOD, "Food"),
-	)
-	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
-	sponsorship_amount = models.CharField(max_length=charFieldMaxLength)
+	# FUNDS = 1
+	# SPACE = 2
+	# PEOPLE = 3
+	# FOOD = 4
+	# sponsorship_type_choices = (
+	# 	(FUNDS, "Funds"),
+	# 	(SPACE, "Space"),
+	# 	(PEOPLE, "People"),
+	# 	(FOOD, "Food"),
+	# )
+	sponsorship_type = models.ForeignKey(Sponsor_types)
+	# sponsorship_amount = models.CharField(max_length=charFieldMaxLength)
 
-class Event_Sponsorship_Type(models.Model):
-	event_sponsorship = models.ForeignKey(Event_Sponsorship)
-	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
-	FUNDS = 1
-	SPACE = 2
-	PEOPLE = 3
-	FOOD = 4
-	sponsorship_type_choices = (
-		(FUNDS, "Funds"),
-		(SPACE, "Space"),
-		(PEOPLE, "People"),
-		(FOOD, "Food"),
-	)
-	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
+
+# class Event_Sponsorship_Type(models.Model):
+# 	event_sponsorship = models.ForeignKey(Event_Sponsorship)
+# 	# Data codes: 1 = funds, 2 = space, 3 = people, 4 = food
+# 	FUNDS = 1
+# 	SPACE = 2
+# 	PEOPLE = 3
+# 	FOOD = 4
+# 	sponsorship_type_choices = (
+# 		(FUNDS, "Funds"),
+# 		(SPACE, "Space"),
+# 		(PEOPLE, "People"),
+# 		(FOOD, "Food"),
+# 	)
+# 	sponsorship_type = models.IntegerField(choices=sponsorship_type_choices)
 
 class Event_Image(models.Model):
 	pic = models.ImageField(upload_to = 'Kommonly/static/assets/', default = 'assets/None/no-img.jpg')
