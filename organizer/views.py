@@ -89,7 +89,6 @@ def newEvent(request):
                          name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'],
                          expected_reach=eventForm.cleaned_data['expected_reach'])
         newEvent.save()
-
         for key in request.POST:
                 try:    
                     pk = int(key)
