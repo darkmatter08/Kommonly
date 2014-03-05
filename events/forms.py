@@ -14,8 +14,17 @@ class ImageUploadForm(forms.Form):
     image = forms.ImageField()
 
 class EventForm(forms.ModelForm):
-	for item in Sponsor_types.objects.all():
-		exec(item.funding_type + " = forms.BooleanField(required=False)")
+	# for item in Sponsor_types.objects.all():
+	# 	exec(item.funding_type + " = forms.BooleanField(required=False)")
+	def __init__(self, *args, **kwargs):
+		options = kwargs.pop('options')
+		selected = kwargs.pop('selected', [])
+		super(EventForm, self).__init__(*args, **kwargs)
+		for index in range(len(options)):
+			if options[index].id in selected:
+				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
+			else:
+				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
 	class Meta:
 		model = Event
 		fields = ['name', 'event_date', 'expected_reach', 'description']
