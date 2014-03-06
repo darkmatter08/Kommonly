@@ -33,7 +33,7 @@ APP_DIR = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = '4q8)$#6xbhxm+txu(^_&gl&q7@(x55d*ctz^$00wyrq^3!4@#d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False;
+DEBUG = True;
 
 TEMPLATE_DEBUG = True
 
