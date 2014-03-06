@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from organizer.models import * 
 from events.models import *
 from events.forms import *
@@ -42,3 +42,15 @@ def edit_event(request, event_id):
     currentOrganizer = Organizer.objects.get(user=request.user)
     context = { "organizer": currentOrganizer, "newEvent": eventForm, "edit": 1}
     return render(request, 'events/create.html', context)
+
+def delete_event(request, event_id):
+    event = Event.objects.get(pk=event_id)
+    currentOrganizer = Organizer.objects.get(user=request.user)
+    
+    if event.organizer_id == currentOrganizer.id:
+        event.delete()
+        return HttpResponseRedirect('/organizer/home')
+    else:
+
+        return HttpResponseRedirect('/organizer/home')
+

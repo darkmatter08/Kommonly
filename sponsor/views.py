@@ -15,9 +15,9 @@ def businesses(request):
 	all_businesses = Organization.objects.order_by('id')
 	template = loader.get_template('sponsor/index.html')
 	context = RequestContext(request, {
-		'all_businesses': all_businesses,
+		'businesses': all_businesses,
 	})
-	return HttpResponse(template.render(context))
+	return render(request, 'sponsor/all_businesses.html', context)
 
 def business_profile(request, business_id):
 	try:
