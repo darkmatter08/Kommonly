@@ -6,6 +6,7 @@
 from django.db import models
 from django import forms
 from events.models import *
+from sponsor.models import *
 # from django.forms import *
 
 class ImageUploadForm(forms.Form):
@@ -13,6 +14,17 @@ class ImageUploadForm(forms.Form):
     image = forms.ImageField()
 
 class EventForm(forms.ModelForm):
+	# for item in Sponsor_types.objects.all():
+	# 	exec(item.funding_type + " = forms.BooleanField(required=False)")
+	def __init__(self, *args, **kwargs):
+		options = kwargs.pop('options')
+		selected = kwargs.pop('selected', [])
+		super(EventForm, self).__init__(*args, **kwargs)
+		for index in range(len(options)):
+			if options[index].id in selected:
+				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
+			else:
+				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
 	class Meta:
 		model = Event
 		fields = ['name', 'event_date', 'expected_reach', 'description']
@@ -25,11 +37,11 @@ class EventForm(forms.ModelForm):
 # 			'sponsorship_type': forms.CheckboxSelectMultiple()
 # 		}
 
-class Event_Sponsorship_PreferencesForm(forms.Form):
-	sponsorship_type_choices_inv = dict(Event_Sponsorship_Preferences.sponsorship_type_choices)
-	for number, item in Event_Sponsorship_Preferences.sponsorship_type_choices:
-		exec(item + " = forms.BooleanField(required=False)")
-		exec(item + "_desc = forms.CharField(required=False)")
+# class Event_Sponsorship_PreferencesForm(forms.Form):
+# 	# sponsorship_type_choices_inv = dict(Sponsor_types.objects.all())
+# 	for item in Sponsor_types.objects.all():
+# 		exec(item.funding_type + " = forms.BooleanField(required=False)")
+		# exec(item.funding_type + "_desc = forms.CharField(required=False)")
 	# sponsorship_type_choices = {v:k for k, v in sponsorship_type_choices_inv.items()}
 	# sponsorship_type_choices["Funds"]
 	# funds = forms.BooleanField(required=False)
