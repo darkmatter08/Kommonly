@@ -120,8 +120,10 @@ MEDIA_URL = '/assets/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+import os
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
-STATIC_ROOT = ''
+STATIC_ROOT = 'staticfiles'
 
 STATIC_URL = '/static/'
 
@@ -130,8 +132,9 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     # MODIFIED BY SJ: allows us to place the static dir in the app directory
-    os.path.join(APP_DIR, 'static/'),
+    os.path.join(PROJECT_PATH, 'static/'),
 )
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
