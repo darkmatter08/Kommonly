@@ -2,3 +2,27 @@ img.business{
 	height="50px"
 
 }
+#businessName {
+	width: 60%;
+	display: inline;
+	position: relative;
+	float: left;
+	font-size: 20px;
+	height: 150px;
+	text-transform: uppercase;
+	font-weight: 100;
+}
+#bList {
+	list-style-type: none;
+	width: 100%;
+
+}
+#bList li {
+	height: 150px;
+	padding: 25px 0 20px 0;
+	/*margin-bottom: 27px;*/
+
+}
+#bList li:hover {
+	background-color: #F0F0F0;
+}

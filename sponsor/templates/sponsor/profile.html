@@ -14,7 +14,7 @@
 		<h4>About The Company: </h4>
 		<hr>
 		<div id="businessLogo">
-			<img src="/static/event_icon.png" style="width: 100%;"></img>
+			<img src="{{business.image_logo}}" style="width: 100%;"></img>
 		</div>
 		<div id="businessTextDescription">
 			{{ business.description}}
@@ -73,15 +73,15 @@
 			Location <br/>
 			{{ business.location }}
 		</div>
-		
-	</div>
 
 	<div>
 		<a href="" class="orangeButton" data-toggle="modal" data-target="#modalpopup">
 			CONTACT
 		</a>
-
 	</div>
+		
+	</div>
+
 
 	<!-- POP UP MODAL-->
 		<div class="modal fade" id="modalpopup">

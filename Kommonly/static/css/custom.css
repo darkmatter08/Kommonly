@@ -1,3 +1,6 @@
+body {
+	/*font-family: Algerian !important;*/
+}
 .topPart {
 	height: 400px;
 	width: 100%;
@@ -172,6 +175,8 @@ div.logged-in .tab {
 	text-transform: uppercase;
 	font-weight: 100;
 }
+
+
 .eventoption {
 	float: right;
 	width: 10%;

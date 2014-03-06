@@ -9,33 +9,27 @@
 		
 
 		<div id="yourEvents"> 
-			YOUR EVENTS
+			Businesses
 		</div>
 
 		<div id="eventsContainer">
 				
 			<div id="events">
 
-			{% for event in events %}
-				<ul id="eventsList">
-					<a href="/events/{{ event.pk }}">
+			{% for company in businesses %}
+				<ul id="bList">
+					<a href="/businesses/{{ company.pk }}">
 						<li>
-							<span id="eventName">
-								<span><img src="/static/event_icon.png" style="height: 30px; padding-right: 10px;"></img></span>{{ event.name }}
+							<span id="businessName">
+								<span><img src="{{company.image_logo}}" style="height: 100px; padding-right: 10px;"></img></span>{{ company.name }}
 							</span>
 							<div id="eventControllers">
-								<a class="eventoption" href="/events/{{event.pk}}/delete">Delete </a>
-								<a class="eventoption" href="/events/{{ event.pk }}/edit"> Edit Event</a>
 							</div>
 						</li>
 					</a>
 				</ul>
 			{% endfor %}
-				<div style="text-align:center" id="signupbutton">
-					<a href="/events/create" class="orangeButton" style="text-decoration:none;">
-						Create New Event
-					</a>
-				</div>
+				
 
 			</div>
 		</div>
