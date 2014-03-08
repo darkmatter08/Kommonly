@@ -84,7 +84,7 @@
 
 
 	<!-- POP UP MODAL-->
-		<div class="modal fade" id="modalpopup">
+		<div class="modal fade" id="modalpopup" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					 <div class="modal-header">
@@ -119,13 +119,9 @@
 		           type: "POST",
 		           url: url,
 		           data: $("#contact").serialize(), // serializes the form's elements.
-		           success: function(data)
-		           {
-		               alert(data); // show response from the php script.
-		           }
 		    });
 		    $('#modalpopup').modal('hide')
-		    return false; // avoid to execute the actual submit of the form.
+		    return true; 
 		});
 		</script>
 		<script src="{% static 'js/jquery.js' %}"></script>
