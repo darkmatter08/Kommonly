@@ -76,36 +76,6 @@ def organizer_home(request):
     context = { 'request': request, "organizer": currentOrganizer, "events": events}
     return render(request, 'organizer/organizer_dashboard.html', context)
 
-@csrf_exempt
-def newEvent(request):
-    if request.method != 'POST':
-        return HttpResponseBadRequest()
-    currentOrganizer = Organizer.objects.get(user=request.user)
-    eventForm = EventForm(request.POST, options=Sponsor_types.objects.all())
-    
-    if eventForm.is_valid():
-
-        newEvent = Event(organizer=currentOrganizer, event_date=eventForm.cleaned_data['event_date'],
-                         name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'],
-                         expected_reach=eventForm.cleaned_data['expected_reach'])
-        newEvent.save()
-        for key in request.POST:
-                try:    
-                    pk = int(key)
-                    stype = Sponsor_types.objects.get(pk=pk)
-                    val = request.POST[key]  
-                    print "VAL IS " + val
-                    if val:
-                        Event_Sponsorship_Preferences.objects.create(event=newEvent, sponsorship_type=stype)
-                except ValueError:
-                    continue
-        return HttpResponseRedirect('/organizer/home')
-    else:
-        context = { "organizer": currentOrganizer, "newEvent": eventForm}
-        return render(request, 'events/create.html', context)
-    # TODO return as JSON so the client can update the page dynamically.
-    # or have the client do an AJAX to get the data and update the table automatically
-    #return HttpResponse(json.dumps(eventForm.cleaned_data), content_type="application/json")
 
 # Need to be sent the event ID to look it up.
 # def editEvent(request):
