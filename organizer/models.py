@@ -1,19 +1,11 @@
 from django.db import models
-
-# Create your models here.
-from sponsor.models import *
 from django.contrib.auth.models import User
 
+from sponsor.models import *
+from sponsor.models import charFieldMaxLength
 
-sponsorship_type_choices = (
-	(1, "Funds"),
-	(2, "Space"),
-	(3, "People"),
-	(4, "Food"),
-)
-charFieldMaxLength = 50
-
+# Represents an Organizer, a user that creates and manages events
+# He seeks sponsorships for his event
 class Organizer(models.Model):
 	user = models.ForeignKey(User)	
 	organization = models.CharField(max_length=charFieldMaxLength)
-	# event = # O2M with event
