@@ -76,15 +76,6 @@ def organizer_home(request):
     context = { 'request': request, "organizer": currentOrganizer, "events": events}
     return render(request, 'organizer/organizer_dashboard.html', context)
 
-
-# Need to be sent the event ID to look it up.
-# def editEvent(request):
-#     if request.method != 'POST':
-#         return HttpResponseBadRequest()
-#     currentOrganizer = Organizer.objects.get(user=request.user)
-#     eventForm = EventForm(request.POST)
-#     return HttpResponse("Under Construction")
-
 # AJAX method to serialize all current events and return as JSON. 
 # Frontend can call this to load all current events. 
 @csrf_exempt

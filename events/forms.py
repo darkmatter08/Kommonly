@@ -19,10 +19,13 @@ class EventForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		options = kwargs.pop('options')
 		selected = kwargs.pop('selected', [])
+		print "selected in eventForm: " + str(selected)
+		print "options in eventForm: " + str(options)
 		super(EventForm, self).__init__(*args, **kwargs)
 		for index in range(len(options)):
 			if options[index].id in selected:
-				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
+				print "in selected: " + str(options[index].id)
+				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type, initial=True)
 			else:
 				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
 	class Meta:

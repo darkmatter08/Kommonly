@@ -32,7 +32,7 @@ def new_Event(request):
         return HttpResponseBadRequest()
     currentOrganizer = Organizer.objects.get(user=request.user)
     eventForm = EventForm(request.POST, options=Sponsor_types.objects.all())
-    
+    print request.POST
     if eventForm.is_valid():
 
         newEvent = Event(organizer=currentOrganizer, event_date=eventForm.cleaned_data['event_date'],
@@ -71,10 +71,12 @@ def edit_event(request, event_id):
     for s in selected:
         sarray.append(s.sponsorship_type.id)
 
-    print sarray
-    eventForm = EventForm(eventData, options=Sponsor_types.objects.all(), selected=sarray, initial={'id_1': True})
-    # preferencesForm = Event_Sponsorship_PreferencesForm(preferencesData)
-    # return event_view(request=request, eventForm=eventForm, edit=True)
+    print "Preferences: " + str(sarray)
+    eventForm = EventForm(eventData, options=Sponsor_types.objects.all(), selected=sarray)#, initial={'id_1': True})
+    print eventForm
+    print eventForm.is_bound
+    # eventSponsorshipPreferences = Event_Sponsorship_Preferences.objects.filter(event=currentEvent)
+
     currentOrganizer = Organizer.objects.get(user=request.user)
     context = { "organizer": currentOrganizer, "newEvent": eventForm, "edit": 1}
     return render(request, 'events/create.html', context)
