@@ -61,14 +61,15 @@ class ContactForm(forms.Form):
 	subject = forms.CharField(max_length=100, initial="Sponsorship for ")
 	message = forms.CharField(widget = forms.Textarea)
 	organizer_email = forms.EmailField()
+	#events = forms.ModelMultipleChoiceField(["hello", "goodbye"]]) 
+
 	cc_myself = forms.BooleanField(required=False)
 
 def contact(request, business_id):
 	print "contact reached"
-	if not request.user.is_authenticated():
-		return HttpResponse("Please login to contact businesses")
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
+		print(form)
 		if form.is_valid():
 			print "form is valid"
 			send_mail(request.POST['subject'], request.POST['message'], request.POST['organizer_email'],

@@ -7,7 +7,7 @@ from django.db import models
 from django import forms
 from events.models import *
 from sponsor.models import *
-# from django.forms import *
+from django.forms import ModelForm, Textarea
 
 class ImageUploadForm(forms.Form):
     """Image upload form."""
@@ -28,9 +28,13 @@ class EventForm(forms.ModelForm):
 				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type, initial=True)
 			else:
 				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
+		expected_reach1 = forms.CharField(widget = forms.Textarea)
 	class Meta:
 		model = Event
 		fields = ['name', 'event_date', 'expected_reach', 'description']
+		widgets = {
+            'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
+        }
 
 # class Event_Sponsorship_PreferencesForm(forms.ModelForm):
 # 	class Meta:
