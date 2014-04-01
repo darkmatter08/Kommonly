@@ -330,8 +330,8 @@ input:not([type=submit]):not([type=file]) {
 }
 
 .title-card {
-	margin-left: 10px;
-	margin-right: 10px;
+	margin-left: 5%;
+	margin-right: 10%;
 }
 .see-all{
 	float: right;
@@ -357,7 +357,7 @@ position: relative;
 .project-card {
 	padding: 5px;
 	background-position: 0 307px;
-	height: 360px;
+	min-height: 360px;
 	width: 100%;
 	background: white;
 	border: 1px solid #d0d5cb;
@@ -372,8 +372,21 @@ position: relative;
 	display: inline-block;
 	list-style-type: none;
 	padding-right: 20px;
+	vertical-align: middle;
 }
 
 .slider_list li:first {
 	margin-left: 50px;
+}
+.featuredTitle {
+	color: black;
+	font-size: 18px;
+}
+.featuredTitle:hover {
+	text-decoration: none;
+}
+
+.location {
+	position: absolute;
+	bottom: 10px;
 }
