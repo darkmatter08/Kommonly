@@ -63,18 +63,22 @@ def new_Event(request):
 
 # Edit Event
 def edit_event(request, event_id):
+    print "IN EDIT EVENT"
     print event_id
     currentEvent = Event.objects.get(pk=event_id)
     eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description}
     selected = Event_Sponsorship_Preferences.objects.filter(event=currentEvent)
     sarray = []
     for s in selected:
-        sarray.append(s.sponsorship_type.id)
+        sarray.append(str(s.sponsorship_type.id))
 
     print "Preferences: " + str(sarray)
-    eventForm = EventForm(eventData, options=Sponsor_types.objects.all(), selected=sarray)#, initial={'id_1': True})
+    eventForm = EventForm(eventData, options=Sponsor_types.objects.all(), selected=sarray)
     print eventForm
     print eventForm.is_bound
+    for i in range(1, 5):
+        eventForm.fields[str(i)].initial = True
+        print eventForm.fields[str(i)].initial
     # eventSponsorshipPreferences = Event_Sponsorship_Preferences.objects.filter(event=currentEvent)
 
     currentOrganizer = Organizer.objects.get(user=request.user)

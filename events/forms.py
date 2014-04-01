@@ -21,6 +21,10 @@ class EventForm(forms.ModelForm):
 		selected = kwargs.pop('selected', [])
 		print "selected in eventForm: " + str(selected)
 		print "options in eventForm: " + str(options)
+		for option in options:
+			print str(option.id)
+		print "----"
+		print "length of options: " + str(len(options))
 		super(EventForm, self).__init__(*args, **kwargs)
 		for index in range(len(options)):
 			if options[index].id in selected:
