@@ -52,7 +52,7 @@
 		<div class="container marketing" id="below_fold">
 	
 			<!-- Three columns of text below the carousel -->
-			<div class="row">
+			<div class="row" id="event_features">
 				<div class="col-lg-4">
 					<img src="/static/local.png" style="width: 120px; height: 120px;" alt="140x140">
 					<h2 style="font-weight: 100;">Local</h2>
@@ -72,7 +72,124 @@
 					
 				</div>
 			</div>
+			
+			<br/>
+			<div class="featured" id="featured_events"> 
+				<div class="title-card">
 
+						<a href="/discover/popular?ref=popular">Featured</a>
+						<span class="see-all" style="float:right;"><a href="/discover/popular?ref=popular">See all</a></span>
+
+				</div>
+					<ul class="slider_list">
+						<li>
+							<div class="project">
+								<div class="project-card-wrap">
+									<div class="project-card">
+										<div class="img_event">
+											<img src="https://pbs.twimg.com/profile_images/78281106/small_logo_for_twitter.JPG" style="width: 100%; height: 130px;"></img>
+										</div>
+										<div class="featured_description">
+											<h4 style="color: #0b1902;">B.good</h4>
+											<span style="color:#75796f;">B.good is a burger company based in Massachusettes. With 11 stores, B.good is a fast growing company and we'd like to give back to our community!</span>
+										</div>
+										</br>
+										<img src="http://eventinsure.hubinternational.com/images/dropdowns/quote/location-icon.png" 
+										style="width: 30px;"></img>
+										<span class="location-name" style="color: #75796f;">Boston, MA</span>
+										
+									</div>
+								</div>
+							</div>
+						</li>	
+						<li>
+							<div class="project">
+								<div class="project-card-wrap">
+									<div class="project-card">
+										<div class="img_event">
+											<img src="https://pbs.twimg.com/profile_images/78281106/small_logo_for_twitter.JPG" style="width: 100%; height: 130px;"></img>
+										</div>
+										<div class="featured_description">
+											<h4 style="color: #0b1902;">B.good</h4>
+											<span style="color:#75796f;">B.good is a burger company based in Massachusettes. With 11 stores, B.good is a fast growing company and we'd like to give back to our community!</span>
+										</div>
+										</br>
+										<img src="http://eventinsure.hubinternational.com/images/dropdowns/quote/location-icon.png" 
+										style="width: 30px;"></img>
+										<span class="location-name" style="color: #75796f;">Boston, MA</span>
+										
+									</div>
+								</div>
+							</div>
+						</li>	
+						<li>
+							<div class="project">
+								<div class="project-card-wrap">
+									<div class="project-card">
+										<div class="img_event">
+											<img src="https://pbs.twimg.com/profile_images/78281106/small_logo_for_twitter.JPG" style="width: 100%; height: 130px;"></img>
+										</div>
+										<div class="featured_description">
+											<h4 style="color: #0b1902;">B.good</h4>
+											<span style="color:#75796f;">B.good is a burger company based in Massachusettes. With 11 stores, B.good is a fast growing company and we'd like to give back to our community!</span>
+										</div>
+										</br>
+										<img src="http://eventinsure.hubinternational.com/images/dropdowns/quote/location-icon.png" 
+										style="width: 30px;"></img>
+										<span class="location-name" style="color: #75796f;">Boston, MA</span>
+										
+									</div>
+								</div>
+							</div>
+						</li>	
+						<li>
+							<div class="project">
+								<div class="project-card-wrap">
+									<div class="project-card">
+										<div class="img_event">
+											<img src="https://pbs.twimg.com/profile_images/78281106/small_logo_for_twitter.JPG" style="width: 100%; height: 130px;"></img>
+										</div>
+										<div class="featured_description">
+											<h4 style="color: #0b1902;">B.good</h4>
+											<span style="color:#75796f;">B.good is a burger company based in Massachusettes. With 11 stores, B.good is a fast growing company and we'd like to give back to our community!</span>
+										</div>
+										</br>
+										<img src="http://eventinsure.hubinternational.com/images/dropdowns/quote/location-icon.png" 
+										style="width: 30px;"></img>
+										<span class="location-name" style="color: #75796f;">Boston, MA</span>
+										
+									</div>
+								</div>
+							</div>
+						</li>	
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="row" style="display:none;" id="business_features">
+				<div class="col-lg-4">
+					<img src="/static/local.png" style="width: 120px; height: 120px;" alt="140x140">
+					<h2 style="font-weight: 100;">Local</h2>
+					<p style="font-size: 18px;">Kommonly gives you access to big and small events happening around you.</p>
+					
+				</div>
+				<div class="col-lg-4">
+					<img src="/static/analytics.png" style="width: 120px; height: 120px;" alt="140x140">
+					<h2 style="font-weight: 100;">Analytics</h2>
+					<p style="font-size: 18px;">Kommonly helps you identify the best events to sponsor
+						with the best return on your investment.</p>
+					
+				</div>
+				<div class="col-lg-4">
+					<img src="/static/streamlined.png" style="width: 120px; height: 120px;" alt="140x140">
+					<h2 style="font-weight: 100;">Streamlined</h2>
+					<p style="font-size: 18px;">The entire sponsorship process is handled on Kommonly. No more mass e-mails from random people.</p>
+					
+				</div>
+
+				
+			</div>
 
 			<!-- START THE FEATURETTES -->
 
@@ -213,8 +330,13 @@
 			$(this).addClass("selected")
 			if ($(this).attr('id') == "business") {
 				$('#event').removeClass("selected");
+				$('#event_features').hide();
+				$('#business_features').show();
+
 			} else {
 				$('#business').removeClass("selected");
+				$('#business_features').hide();
+				$('#event_features').show();
 
 			}
 		}
