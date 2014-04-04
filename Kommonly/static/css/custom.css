@@ -262,6 +262,10 @@ div.logged-in .tab {
 
 
 }
+.orangeButton:hover {
+	color: white;
+	background-color: #f37b1b;
+}
 
 div.signupbutton a {
 	text-decoration: none;
