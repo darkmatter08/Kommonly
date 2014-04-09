@@ -7,7 +7,7 @@ from django.db import models
 from django import forms
 from events.models import *
 from sponsor.models import *
-# from django.forms import *
+from django.forms import ModelForm, Textarea
 
 class ImageUploadForm(forms.Form):
     """Image upload form."""
@@ -16,6 +16,7 @@ class ImageUploadForm(forms.Form):
 class EventForm(forms.ModelForm):
 	# for item in Sponsor_types.objects.all():
 	# 	exec(item.funding_type + " = forms.BooleanField(required=False)")
+<<<<<<< HEAD
 	
 	sponsorshipTypeLookup = {"id_new_1": 1, "id_new_2": 2, "id_new_3": 3, "id_new_4": 4}
 	## OLD PREFERENCES:::
@@ -35,9 +36,27 @@ class EventForm(forms.ModelForm):
 	# 			self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type, initial=True)
 	# 		else:
 	# 			self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
+=======
+	def __init__(self, *args, **kwargs):
+		options = kwargs.pop('options')
+		selected = kwargs.pop('selected', [])
+		print "selected in eventForm: " + str(selected)
+		print "options in eventForm: " + str(options)
+		super(EventForm, self).__init__(*args, **kwargs)
+		for index in range(len(options)):
+			if options[index].id in selected:
+				print "in selected: " + str(options[index].id)
+				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type, initial=True)
+			else:
+				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
+		expected_reach1 = forms.CharField(widget = forms.Textarea)
+>>>>>>> 002b099e846f0a743de34e32cb7b79be771983f8
 	class Meta:
 		model = Event
 		fields = ['name', 'event_date', 'expected_reach', 'description']
+		widgets = {
+            'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
+        }
 
 # class Event_Sponsorship_PreferencesForm(forms.ModelForm):
 # 	class Meta:

@@ -32,24 +32,28 @@ def business_profile(request, business_id):
 	eventdate = "<event date>"
 	eventname = "<event name>"
 	eventreach = "<expected reach>"
+	organization = "<organization>"
+	email = "team+anonymous@kommonly.com"
 	if request.user.is_authenticated():
 		name = request.user.first_name 
 		event = None
 		if len(Event.objects.filter(organizer_id=request.user.id)) > 0:
-			eventdate = Event.objects.filter(organizer_id=request.user.id)[0].event_date
+			eventdate = 'EVENT DATE FOUND' #vent.objects.filter(organizer_id=request.user.id)[0].event_date
 			eventname = Event.objects.filter(organizer_id=request.user.id)[0].name
 			eventreach = Event.objects.filter(organizer_id=request.user.id)[0].expected_reach
+			organization = Organizer.objects.get(user_id=request.user.id).organization
+			email = request.user.email
 		
 	message = "Dear " + business.contact_fname + ', I am ' + name + ' and am putting on an event on '
 	message += eventdate + " called " + eventname + ". We would love to have you sponsor our organization with "
 	message += "either money, food, swag or possibly a venue. In exchange, our organization, "
-	message += Organizer.objects.get(user_id=request.user.id).organization + ", will promote your brandname"
-	message += "at our event, list you as a sponsor on all our marketing materials, and invite you to attend our event"
-	message += "and connect with our talented students. We anticipate " + eventreach + " people to attend, most of whom are very interested in <topic tags e.g. finance>. We think that this event would be a tremendous"
-	message += "opportunity for our attendees to get to know us. Sponsoring our event would show a real commitment to <XYZ>, which we believe"
-	message += "would reflect quite positively on your company. It will also be a lot of fun to attend if you choose to send"
-	message += " members of " + business.name + " to " + eventname + "."
-	data = {'subject': business.name + " sponsorship for event", 'message':message,'organizer_email':request.user.email}
+	message += organization + ", will promote your brandname "
+	message += "at our event, list you as a sponsor on all our marketing materials, and invite you to attend our event "
+	message += "and connect with our talented students. We anticipate " + eventreach + " people to attend, most of whom would be very interested in your company. "
+	message += "Sponsoring our event would show a real commitment to <STATE YOUR CAUSE HERE>, which we believe "
+	message += "would reflect quite positively on your company. It will also be a lot of fun to attend if you choose to send "
+	message += "members of " + business.name + " to " + eventname + "."
+	data = {'subject': business.name + " sponsorship for event", 'message':message,'organizer_email':email}
 	return render(request, 'sponsor/profile.html', {'business':business, 'funding_types':sponsorship_types, 'organizer':request.user, 'form':ContactForm(data)})
 
 class ContactForm(forms.Form):
@@ -57,14 +61,15 @@ class ContactForm(forms.Form):
 	subject = forms.CharField(max_length=100, initial="Sponsorship for ")
 	message = forms.CharField(widget = forms.Textarea)
 	organizer_email = forms.EmailField()
+	#events = forms.ModelMultipleChoiceField(["hello", "goodbye"]]) 
+
 	cc_myself = forms.BooleanField(required=False)
 
 def contact(request, business_id):
 	print "contact reached"
-	if not request.user.is_authenticated():
-		return HttpResponse("Please login to contact businesses")
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
+		print(form)
 		if form.is_valid():
 			print "form is valid"
 			send_mail(request.POST['subject'], request.POST['message'], request.POST['organizer_email'],

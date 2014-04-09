@@ -1,5 +1,6 @@
 body {
 	/*font-family: Algerian !important;*/
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif, helvetica, sans-serif;
 }
 .topPart {
 	height: 400px;
@@ -261,6 +262,10 @@ div.logged-in .tab {
 
 
 }
+.orangeButton:hover {
+	color: white;
+	background-color: #f37b1b;
+}
 
 div.signupbutton a {
 	text-decoration: none;
@@ -326,4 +331,66 @@ input:not([type=submit]):not([type=file]) {
 #header_logo {
 	width: 50%;
 	float: left;
+}
+
+.title-card {
+	margin-left: 5%;
+	margin-right: 10%;
+}
+.see-all{
+	float: right;
+	margin-top: 4px;
+}
+.project {
+margin-left: 10px;
+margin-right: 10px;
+width: 220px;
+min-height: 250px;
+margin-top: 10px;
+position: relative;
+
+
+}
+.project-card-wrap {
+	border-radius: 9px;
+	background: rgba(11,25,2,0.06);
+	padding: 4px;
+	margin-bottom: 20px;
+	clear: both;
+}
+.project-card {
+	padding: 5px;
+	background-position: 0 307px;
+	min-height: 360px;
+	width: 100%;
+	background: white;
+	border: 1px solid #d0d5cb;
+	border-radius: 6px;
+
+}
+
+.slider_list {
+	/*margin-left: 5%;*/
+}
+.slider_list li {
+	display: inline-block;
+	list-style-type: none;
+	padding-right: 20px;
+	vertical-align: middle;
+}
+
+.slider_list li:first {
+	margin-left: 50px;
+}
+.featuredTitle {
+	color: black;
+	font-size: 18px;
+}
+.featuredTitle:hover {
+	text-decoration: none;
+}
+
+.location {
+	position: absolute;
+	bottom: 10px;
 }
