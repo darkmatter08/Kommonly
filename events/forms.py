@@ -36,7 +36,8 @@ class EventForm(forms.ModelForm):
 	# 		else:
 	# 			self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
 	def __init__(self, *args, **kwargs):
-		expected_reach1 = forms.CharField(widget = forms.Textarea)
+		super(EventForm, self).__init__(*args, **kwargs)
+		expected_reach = forms.CharField(widget = forms.Textarea)
 	class Meta:
 		model = Event
 		fields = ['name', 'event_date', 'expected_reach', 'description']
