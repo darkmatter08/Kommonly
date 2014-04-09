@@ -16,22 +16,25 @@ class ImageUploadForm(forms.Form):
 class EventForm(forms.ModelForm):
 	# for item in Sponsor_types.objects.all():
 	# 	exec(item.funding_type + " = forms.BooleanField(required=False)")
-	def __init__(self, *args, **kwargs):
-		options = kwargs.pop('options')
-		selected = kwargs.pop('selected', [])
-		print "selected in eventForm: " + str(selected)
-		print "options in eventForm: " + str(options)
-		for option in options:
-			print str(option.id)
-		print "----"
-		print "length of options: " + str(len(options))
-		super(EventForm, self).__init__(*args, **kwargs)
-		for index in range(len(options)):
-			if options[index].id in selected:
-				print "in selected: " + str(options[index].id)
-				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type, initial=True)
-			else:
-				self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
+	
+	sponsorshipTypeLookup = {"id_new_1": 1, "id_new_2": 2, "id_new_3": 3, "id_new_4": 4}
+	## OLD PREFERENCES:::
+	# def __init__(self, *args, **kwargs):
+	# 	options = kwargs.pop('options')
+	# 	selected = kwargs.pop('selected', [])
+	# 	print "selected in eventForm: " + str(selected)
+	# 	print "options in eventForm: " + str(options)
+	# 	for option in options:
+	# 		print str(option.id)
+	# 	print "----"
+	# 	print "length of options: " + str(len(options))
+	# 	super(EventForm, self).__init__(*args, **kwargs)
+	# 	for index in range(len(options)):
+	# 		if options[index].id in selected:
+	# 			print "in selected: " + str(options[index].id)
+	# 			self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type, initial=True)
+	# 		else:
+	# 			self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
 	class Meta:
 		model = Event
 		fields = ['name', 'event_date', 'expected_reach', 'description']

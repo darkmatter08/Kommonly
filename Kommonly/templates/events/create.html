@@ -16,7 +16,7 @@
 
 		
 		{% if edit %}
-		<form action="/api/organizer/editEvent" method="post" enctype="multipart/form-data">
+		<form action="/events/{{currentEvent.pk}}/edit" method="post" enctype="multipart/form-data">
 		{% else %}
 		<form action="/api/organizer/newEvent" method="post" enctype="multipart/form-data">
 		{% endif %}
@@ -24,6 +24,9 @@
 	        <table>
 	            {{ newEvent.as_table }}
 	            <!-- {{ newEvent_Sponsorship_PreferencesForm.as_table }} -->
+	            {% for option in preferences %}
+	            <tr><th><label for="{{option.1}}">{{option.1}}:</label></th><td><input id="{{option.2}}" name="{{option.2}}" type="checkbox" {% if option.3 %}checked="True"{% endif %}/></td></tr>
+	            {% endfor %}
 	        </table>
 	        {% csrf_token %}
         	<input type="submit" value="Save">
