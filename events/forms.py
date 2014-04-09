@@ -14,26 +14,6 @@ class ImageUploadForm(forms.Form):
 	image = forms.ImageField(label='Event Image')
 
 class EventForm(forms.ModelForm):
-	# for item in Sponsor_types.objects.all():
-	# 	exec(item.funding_type + " = forms.BooleanField(required=False)")
-	
-	## OLD PREFERENCES:::
-	# def __init__(self, *args, **kwargs):
-	# 	options = kwargs.pop('options')
-	# 	selected = kwargs.pop('selected', [])
-	# 	print "selected in eventForm: " + str(selected)
-	# 	print "options in eventForm: " + str(options)
-	# 	for option in options:
-	# 		print str(option.id)
-	# 	print "----"
-	# 	print "length of options: " + str(len(options))
-	# 	super(EventForm, self).__init__(*args, **kwargs)
-	# 	for index in range(len(options)):
-	# 		if options[index].id in selected:
-	# 			print "in selected: " + str(options[index].id)
-	# 			self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type, initial=True)
-	# 		else:
-	# 			self.fields['{option}'.format(option=options[index].id)] = forms.BooleanField(required=False, label=options[index].funding_type)
 	def __init__(self, *args, **kwargs):
 		super(EventForm, self).__init__(*args, **kwargs)
 		expected_reach = forms.CharField(widget = forms.Textarea)
@@ -45,16 +25,24 @@ class EventForm(forms.ModelForm):
 			'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
 		}
 
+	## METHODS FOR SPONSORSHIP PREFERENCES: 
+
+	# Returns a list of all the funding types
 	@staticmethod
 	def getSponsorTypes():
 		return [ sponsor_type.funding_type for sponsor_type in Sponsor_types.objects.all() ]
-# class Event_Sponsorship_PreferencesForm(forms.ModelForm):
-# 	class Meta:
-# 		model = Event_Sponsorship_Preferences
-# 		fields = ['sponsorship_type', 'sponsorship_amount']
-# 		widgets = {
-# 			'sponsorship_type': forms.CheckboxSelectMultiple()
-# 		}
+
+	# Returns a dictionary of funding types to selection
+	@staticmethod
+	def getEventSponsorTypes(event=None):
+		preferences = {}
+		for sponsor_type in EventForm.getSponsorTypes():
+			preferences[sponsor_type] = False
+		if event is not None:
+			eventSponsorshipPreferences = Event_Sponsorship_Preferences.objects.filter(event=event)
+			for selected_sponsor_type in eventSponsorshipPreferences:
+				preferences[selected_sponsor_type.sponsorship_type.funding_type] = True
+		return preferences
 
 # class Event_Sponsorship_PreferencesForm(forms.Form):
 # 	# sponsorship_type_choices_inv = dict(Sponsor_types.objects.all())

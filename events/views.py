@@ -21,8 +21,7 @@ def event_profile(request, event_id):
 @login_required
 def create_event(request):    
     currentOrganizer = Organizer.objects.get(user=request.user)
-    preferences = [[1, "Venue", "id_new_1", False], [2, "Funding", "id_new_2", False], [3, "Swag", "id_new_3", False], [4, "People", "id_new_4", False]]
-    context = { "organizer": currentOrganizer, "newEvent": EventForm(), "edit": False, "preferences": preferences}
+    context = { "newEvent": EventForm(), "edit": False, "sponsor_types": EventForm.getEventSponsorTypes()}
     return render(request, 'events/create.html', context)
 
 def new_Event(request):
@@ -45,14 +44,7 @@ def edit_event(request, event_id):
     else:
         eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description}
         eventForm = EventForm(eventData)
-        preferences = {}
-        for sponsor_type in EventForm.getSponsorTypes():
-            preferences[sponsor_type] = False
-        eventSponsorshipPreferences = Event_Sponsorship_Preferences.objects.filter(event=currentEvent)
-        for selected_sponsor_type in eventSponsorshipPreferences:
-            preferences[selected_sponsor_type.sponsorship_type.funding_type] = True
-        print preferences
-        context = { "newEvent": eventForm, "edit": True, "sponsor_types": preferences, "currentEvent": currentEvent}
+        context = { "newEvent": eventForm, "edit": True, "sponsor_types": EventForm.getEventSponsorTypes(currentEvent), "currentEvent": currentEvent}
         return render(request, 'events/create.html', context)
 
 # TODO Throws error if not logged in; "Could not import organizer.views.signup. View does not exist in module organizer.views.""
@@ -88,3 +80,4 @@ def edit_or_update_event(request, organizer, currentEvent):
             stype = Sponsor_types.objects.get(funding_type=sponsorship_type)
             Event_Sponsorship_Preferences.objects.create(event=currentEvent, sponsorship_type=stype)
     return HttpResponseRedirect('/organizer/home')
+
