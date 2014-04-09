@@ -12,11 +12,11 @@ def event_profile(request, event_id):
     picture = "/static/assets/event_image_filler.jpg"
     if len(pictures_objects) != 0:
         picture = "/static/assets/" + pictures_objects[0].pic.url.split("/")[-1]
-    # TODO implement multiple images 
-    pictures = []
-    # for pic in pictures_objects:
-    #     pictures.append("/static/assets/" + pic.pic.url.split("/")[-1])
-    return render(request, 'events/profile.html', {"currentEvent": currentEvent, "picture_url": picture, "pictures": pictures})
+    preferences = []
+    eventSponsorshipPreferences = Event_Sponsorship_Preferences.objects.filter(event=currentEvent)
+    for pref in eventSponsorshipPreferences:
+        preferences.append(pref.sponsorship_type.funding_type)
+    return render(request, 'events/profile.html', {"currentEvent": currentEvent, "picture_url": picture, "funding_types": preferences})
 
 @login_required
 def create_event(request):    
@@ -33,6 +33,7 @@ def new_Event(request):
     return edit_or_update_event(request, currentOrganizer, Event(organizer=currentOrganizer))
 
 # Edit Event
+@login_required
 def edit_event(request, event_id):
     print "IN EDIT EVENT"
     currentEvent = Event.objects.get(pk=event_id)
@@ -60,6 +61,8 @@ def edit_event(request, event_id):
         context = { "newEvent": eventForm, "edit": 1, "preferences": preferences, "currentEvent": currentEvent}
         return render(request, 'events/create.html', context)
 
+# TODO Throws error if not logged in; "Could not import organizer.views.signup. View does not exist in module organizer.views.""
+@login_required
 def delete_event(request, event_id):
     event = Event.objects.get(pk=event_id)
     currentOrganizer = Organizer.objects.get(user=request.user)
