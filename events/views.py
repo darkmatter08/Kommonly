@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from organizer.models import * 
 from events.models import *
 from events.forms import *
@@ -17,49 +18,19 @@ def event_profile(request, event_id):
     #     pictures.append("/static/assets/" + pic.pic.url.split("/")[-1])
     return render(request, 'events/profile.html', {"currentEvent": currentEvent, "picture_url": picture, "pictures": pictures})
 
-def event_view(request=None, eventForm=EventForm(), edit=False):
-    currentOrganizer = Organizer.objects.get(user=request.user)
-    context = { "organizer": currentOrganizer, "newEvent": eventForm, "edit": edit}
-    return render(request, 'events/create.html', context)
-
-# New Event
+@login_required
 def create_event(request):    
-    return event_view(request=request)
+    currentOrganizer = Organizer.objects.get(user=request.user)
+    preferences = [[1, "Venue", "id_new_1", False], [2, "Funding", "id_new_2", False], [3, "Swag", "id_new_3", False], [4, "People", "id_new_4", False]]
+    context = { "organizer": currentOrganizer, "newEvent": EventForm(), "edit": False, "preferences": preferences}
+    return render(request, 'events/create.html', context)
 
 @csrf_exempt
 def new_Event(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
     currentOrganizer = Organizer.objects.get(user=request.user)
-    eventForm = EventForm(request.POST)
-    print request.POST
-    if eventForm.is_valid():
-
-        newEvent = Event(organizer=currentOrganizer, event_date=eventForm.cleaned_data['event_date'],
-                         name=eventForm.cleaned_data['name'], description=eventForm.cleaned_data['description'],
-                         expected_reach=eventForm.cleaned_data['expected_reach'])
-        newEvent.save()
-        for key in request.POST:
-                try:    
-                    pk = int(key)
-                    stype = Sponsor_types.objects.get(pk=pk)
-                    val = request.POST[key]  
-                    print "VAL IS " + val
-                    if val:
-                        Event_Sponsorship_Preferences.objects.create(event=newEvent, sponsorship_type=stype)
-                except ValueError:
-                    continue
-        imageForm = ImageUploadForm(request.POST, request.FILES)
-        if imageForm.is_valid():
-            m = Event_Image.objects.create(pic=imageForm.cleaned_data['image'], event = newEvent)
-            m.save()
-        return HttpResponseRedirect('/organizer/home')
-    else:
-        context = { "organizer": currentOrganizer, "newEvent": eventForm}
-        return render(request, 'events/create.html', context)
-    # TODO return as JSON so the client can update the page dynamically.
-    # or have the client do an AJAX to get the data and update the table automatically
-    #return HttpResponse(json.dumps(eventForm.cleaned_data), content_type="application/json")
+    return edit_or_update_event(request, currentOrganizer, Event(organizer=currentOrganizer))
 
 # Edit Event
 def edit_event(request, event_id):
@@ -69,26 +40,7 @@ def edit_event(request, event_id):
 
     # Updating the event
     if request.method == 'POST':
-        print "Updating the Event"
-        eventForm = EventForm(request.POST)
-        if eventForm.is_valid():
-            currentEvent.event_date=eventForm.cleaned_data['event_date']
-            currentEvent.name = eventForm.cleaned_data['name']
-            currentEvent.description = eventForm.cleaned_data['description']
-            currentEvent.expected_reach = eventForm.cleaned_data['expected_reach']
-            currentEvent.save()
-        
-        # Checkboxes are only in request.POST if they are checked ("ON"), otherwise 
-        # they are not included in the request.POST. As a result, we delete all the 
-        # existing preferences and create new ones
-        Event_Sponsorship_Preferences.objects.filter(event=currentEvent).delete()
-        for checkboxIdOrName, sponsorship_type in EventForm.sponsorshipTypeLookup.items():
-            # Used dictionary.get() to get a default value in case of a failure to find. 
-            # Not sure why this is entirely requried; should be in the post request no matter what 
-            if request.POST.get(checkboxIdOrName, False): 
-                stype = Sponsor_types.objects.get(pk=sponsorship_type)
-                Event_Sponsorship_Preferences.objects.create(event=currentEvent, sponsorship_type=stype)
-        return HttpResponseRedirect('/organizer/home')
+        return edit_or_update_event(request, currentOrganizer, currentEvent)
 
     # Getting event edit page
     else:
@@ -111,11 +63,32 @@ def edit_event(request, event_id):
 def delete_event(request, event_id):
     event = Event.objects.get(pk=event_id)
     currentOrganizer = Organizer.objects.get(user=request.user)
-    
     if event.organizer_id == currentOrganizer.id:
         event.delete()
         return HttpResponseRedirect('/organizer/home')
     else:
-
         return HttpResponseRedirect('/organizer/home')
 
+def edit_or_update_event(request, organizer, currentEvent):
+    print "editing or updating the Event"
+    eventForm = EventForm(request.POST)
+    if eventForm.is_valid():
+        currentEvent.event_date=eventForm.cleaned_data['event_date']
+        currentEvent.name = eventForm.cleaned_data['name']
+        currentEvent.description = eventForm.cleaned_data['description']
+        currentEvent.expected_reach = eventForm.cleaned_data['expected_reach']
+        currentEvent.save()
+    else:
+        context = { "organizer": organizer, "newEvent": eventForm}
+        return render(request, 'events/create.html', context)
+    # Checkboxes are only in request.POST if they are checked ("ON"), otherwise 
+    # they are not included in the request.POST. As a result, we delete all the 
+    # existing preferences and create new ones
+    Event_Sponsorship_Preferences.objects.filter(event=currentEvent).delete()
+    for checkboxIdOrName, sponsorship_type in EventForm.sponsorshipTypeLookup.items():
+        # Used dictionary.get() to get a default value in case of a failure to find. 
+        # Not sure why this is entirely requried; should be in the post request no matter what 
+        if request.POST.get(checkboxIdOrName, False): 
+            stype = Sponsor_types.objects.get(pk=sponsorship_type)
+            Event_Sponsorship_Preferences.objects.create(event=currentEvent, sponsorship_type=stype)
+    return HttpResponseRedirect('/organizer/home')
