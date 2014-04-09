@@ -6,15 +6,6 @@
 {% extends "organizer/layout.html"%}
 
 {% block content %}
-		<table class="table">
-			<tr>
-				<th>Name</th>
-				<th>Date</th>
-				<th>Description</th>
-			</tr>
-		</table>
-
-		
 		{% if edit %}
 		<form action="/events/{{currentEvent.pk}}/edit" method="post" enctype="multipart/form-data">
 		{% else %}
@@ -23,9 +14,8 @@
 	        <p><input id="id_image" type="file" class="" name="image"></p>
 	        <table>
 	            {{ newEvent.as_table }}
-	            <!-- {{ newEvent_Sponsorship_PreferencesForm.as_table }} -->
 	            {% for option in preferences %}
-	            <tr><th><label for="{{option.1}}">{{option.1}}:</label></th><td><input id="{{option.2}}" name="{{option.2}}" type="checkbox" {% if option.3 %}checked="True"{% endif %}/></td></tr>
+	            <tr><th><label for="{{option.1}}">{{option.1}}:</label></th><td><input id="{{option.2}}" name="{{option.1}}" type="checkbox" {% if option.3 %}checked="True"{% endif %}/></td></tr>
 	            {% endfor %}
 	        </table>
 	        {% csrf_token %}

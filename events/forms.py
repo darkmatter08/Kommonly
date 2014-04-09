@@ -10,14 +10,13 @@ from sponsor.models import *
 from django.forms import ModelForm, Textarea
 
 class ImageUploadForm(forms.Form):
-    """Image upload form."""
-    image = forms.ImageField()
+	"""Image upload form."""
+	image = forms.ImageField()
 
 class EventForm(forms.ModelForm):
 	# for item in Sponsor_types.objects.all():
 	# 	exec(item.funding_type + " = forms.BooleanField(required=False)")
 	
-	sponsorshipTypeLookup = {"id_new_1": 1, "id_new_2": 2, "id_new_3": 3, "id_new_4": 4}
 	## OLD PREFERENCES:::
 	# def __init__(self, *args, **kwargs):
 	# 	options = kwargs.pop('options')
@@ -38,13 +37,17 @@ class EventForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(EventForm, self).__init__(*args, **kwargs)
 		expected_reach = forms.CharField(widget = forms.Textarea)
+
 	class Meta:
 		model = Event
 		fields = ['name', 'event_date', 'expected_reach', 'description']
 		widgets = {
-            'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
-        }
+			'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
+		}
 
+	@staticmethod
+	def getSponsorTypes():
+		return [ sponsor_type.funding_type for sponsor_type in Sponsor_types.objects.all() ]
 # class Event_Sponsorship_PreferencesForm(forms.ModelForm):
 # 	class Meta:
 # 		model = Event_Sponsorship_Preferences

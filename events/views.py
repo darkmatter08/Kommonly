@@ -88,10 +88,10 @@ def edit_or_update_event(request, organizer, currentEvent):
     # they are not included in the request.POST. As a result, we delete all the 
     # existing preferences and create new ones
     Event_Sponsorship_Preferences.objects.filter(event=currentEvent).delete()
-    for checkboxIdOrName, sponsorship_type in EventForm.sponsorshipTypeLookup.items():
+    for sponsorship_type in EventForm.getSponsorTypes():
         # Used dictionary.get() to get a default value in case of a failure to find. 
         # Not sure why this is entirely requried; should be in the post request no matter what 
-        if request.POST.get(checkboxIdOrName, False): 
-            stype = Sponsor_types.objects.get(pk=sponsorship_type)
+        if request.POST.get(sponsorship_type, False): 
+            stype = Sponsor_types.objects.get(funding_type=sponsorship_type)
             Event_Sponsorship_Preferences.objects.create(event=currentEvent, sponsorship_type=stype)
     return HttpResponseRedirect('/organizer/home')
