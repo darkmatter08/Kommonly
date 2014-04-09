@@ -25,7 +25,6 @@ def create_event(request):
     context = { "organizer": currentOrganizer, "newEvent": EventForm(), "edit": False, "preferences": preferences}
     return render(request, 'events/create.html', context)
 
-@csrf_exempt
 def new_Event(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
@@ -35,7 +34,6 @@ def new_Event(request):
 # Edit Event
 @login_required
 def edit_event(request, event_id):
-    print "IN EDIT EVENT"
     currentEvent = Event.objects.get(pk=event_id)
     currentOrganizer = Organizer.objects.get(user=request.user)
 
@@ -45,20 +43,16 @@ def edit_event(request, event_id):
 
     # Getting event edit page
     else:
-        print "Getting the edit event page"
         eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description}
-        selected = Event_Sponsorship_Preferences.objects.filter(event=currentEvent)
         eventForm = EventForm(eventData)
+        preferences = {}
+        for sponsor_type in EventForm.getSponsorTypes():
+            preferences[sponsor_type] = False
         eventSponsorshipPreferences = Event_Sponsorship_Preferences.objects.filter(event=currentEvent)
-        selected = []
-        for pref in eventSponsorshipPreferences:
-            selected.append(pref.sponsorship_type.pk)
-        
-        preferences = [[1, "Venue", "id_new_1", False], [2, "Funding", "id_new_2", False], [3, "Swag", "id_new_3", False], [4, "People", "id_new_4", False]]
-        for data_item in preferences: 
-            if data_item[0] in selected:
-                data_item[3] = True
-        context = { "newEvent": eventForm, "edit": 1, "preferences": preferences, "currentEvent": currentEvent}
+        for selected_sponsor_type in eventSponsorshipPreferences:
+            preferences[selected_sponsor_type.sponsorship_type.funding_type] = True
+        print preferences
+        context = { "newEvent": eventForm, "edit": True, "sponsor_types": preferences, "currentEvent": currentEvent}
         return render(request, 'events/create.html', context)
 
 # TODO Throws error if not logged in; "Could not import organizer.views.signup. View does not exist in module organizer.views.""
@@ -73,7 +67,6 @@ def delete_event(request, event_id):
         return HttpResponseRedirect('/organizer/home')
 
 def edit_or_update_event(request, organizer, currentEvent):
-    print "editing or updating the Event"
     eventForm = EventForm(request.POST)
     if eventForm.is_valid():
         currentEvent.event_date=eventForm.cleaned_data['event_date']

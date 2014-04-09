@@ -11,7 +11,7 @@ from django.forms import ModelForm, Textarea
 
 class ImageUploadForm(forms.Form):
 	"""Image upload form."""
-	image = forms.ImageField()
+	image = forms.ImageField(label='Event Image')
 
 class EventForm(forms.ModelForm):
 	# for item in Sponsor_types.objects.all():

@@ -14,8 +14,8 @@
 	        <p><input id="id_image" type="file" class="" name="image"></p>
 	        <table>
 	            {{ newEvent.as_table }}
-	            {% for option in preferences %}
-	            <tr><th><label for="{{option.1}}">{{option.1}}:</label></th><td><input id="{{option.2}}" name="{{option.1}}" type="checkbox" {% if option.3 %}checked="True"{% endif %}/></td></tr>
+	            {% for sponsor_type, selected in sponsor_types.items %}
+	            <tr><th><label for="{{sponsor_type}}">{{sponsor_type}}:</label></th><td><input name="{{sponsor_type}}" type="checkbox" {% if selected %}checked="True"{% endif %}/></td></tr>
 	            {% endfor %}
 	        </table>
 	        {% csrf_token %}
