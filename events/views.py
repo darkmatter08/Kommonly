@@ -61,7 +61,7 @@ def delete_event(request, event_id):
 def edit_or_update_event(request, organizer, currentEvent):
     eventForm = EventForm(request.POST)
     if eventForm.is_valid():
-        currentEvent.event_date=eventForm.cleaned_data['event_date']
+        currentEvent.event_date = eventForm.cleaned_data['event_date']
         currentEvent.name = eventForm.cleaned_data['name']
         currentEvent.description = eventForm.cleaned_data['description']
         currentEvent.expected_reach = eventForm.cleaned_data['expected_reach']
@@ -69,6 +69,12 @@ def edit_or_update_event(request, organizer, currentEvent):
     else:
         context = { "organizer": organizer, "newEvent": eventForm}
         return render(request, 'events/create.html', context)
+    imageForm = ImageUploadForm(request.POST, request.FILES)
+    if imageForm.is_valid():
+        obj, created = Event_Image.objects.get_or_create(event = currentEvent, defaults = {'pic': imageForm.cleaned_data['image']})
+        if not created:
+            setattr(obj, 'pic', imageForm.cleaned_data['image'])
+            obj.save()
     # Checkboxes are only in request.POST if they are checked ("ON"), otherwise 
     # they are not included in the request.POST. As a result, we delete all the 
     # existing preferences and create new ones
