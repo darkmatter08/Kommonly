@@ -12,6 +12,7 @@ class Event(models.Model):
 	name = models.CharField(max_length=charFieldMaxLength)
 	description = models.CharField(max_length=charFieldMaxLength)
 	expected_reach = models.CharField(max_length=50000)
+	location = models.CharField(max_length=charFieldMaxLength)
 
 # Represents an agreed upon sponsorship
 # Transaction Table for Many to Many relationship between Event and Sponsor

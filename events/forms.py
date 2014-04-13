@@ -20,7 +20,7 @@ class EventForm(forms.ModelForm):
 
 	class Meta:
 		model = Event
-		fields = ['name', 'event_date', 'expected_reach', 'description']
+		fields = ['name', 'event_date', 'expected_reach', 'description', 'location']
 		widgets = {
 			'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
 		}

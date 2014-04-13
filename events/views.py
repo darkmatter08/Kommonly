@@ -42,7 +42,7 @@ def edit_event(request, event_id):
 
     # Getting event edit page
     else:
-        eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description}
+        eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description, "location": currentEvent.location}
         eventForm = EventForm(eventData)
         context = { "newEvent": eventForm, "edit": True, "sponsor_types": EventForm.getEventSponsorTypes(currentEvent), "currentEvent": currentEvent}
         return render(request, 'events/create.html', context)
@@ -65,6 +65,7 @@ def edit_or_update_event(request, organizer, currentEvent):
         currentEvent.name = eventForm.cleaned_data['name']
         currentEvent.description = eventForm.cleaned_data['description']
         currentEvent.expected_reach = eventForm.cleaned_data['expected_reach']
+        currentEvent.location = eventForm.cleaned_data['location']
         currentEvent.save()
     else:
         context = { "organizer": organizer, "newEvent": eventForm}
