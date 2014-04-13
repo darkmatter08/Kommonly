@@ -20,9 +20,12 @@ class EventForm(forms.ModelForm):
 
 	class Meta:
 		model = Event
-		fields = ['name', 'event_date', 'expected_reach', 'description', 'location']
+		fields = ['name', 'event_date', 'expected_reach', 'description', 'location', 'funding_sought']
 		widgets = {
 			'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
+		}
+		help_texts = {
+			'funding_sought': 'Dollar amount only. Additional details belong in description.'
 		}
 
 	## METHODS FOR SPONSORSHIP PREFERENCES: 
