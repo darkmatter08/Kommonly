@@ -13,7 +13,7 @@ class Event(models.Model):
 	description = models.CharField(max_length=charFieldMaxLength)
 	expected_reach = models.CharField(max_length=50000)
 	location = models.CharField(max_length=charFieldMaxLength)
-	funding_sought = models.CharField(max_length=charFieldMaxLength)
+	funding_sought = models.DecimalField(max_digits=8, decimal_places=2)
 
 # Represents an agreed upon sponsorship
 # Transaction Table for Many to Many relationship between Event and Sponsor
