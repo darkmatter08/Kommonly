@@ -20,14 +20,24 @@ def event_profile(request, event_id):
 
 @login_required
 def create_event(request):    
+    return create_event_helper(request)
+
+# Handles rendering of create event with any eventForm passed to it (for error handling)
+def create_event_helper(request, eventForm=EventForm()):
     currentOrganizer = Organizer.objects.get(user=request.user)
-    context = { "newEvent": EventForm(), "edit": False, "sponsor_types": EventForm.getEventSponsorTypes()}
+    context = { "newEvent": eventForm, "edit": False, "sponsor_types": EventForm.getEventSponsorTypes()}
     return render(request, 'events/create.html', context)
 
 def new_Event(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
     currentOrganizer = Organizer.objects.get(user=request.user)
+    eventForm = EventForm(request.POST)
+    # valid_form = eventForm.is_valid()
+    form_has_errors = eventForm.errors
+    # if not valid_form:
+    if form_has_errors:
+        return create_event_helper(request, eventForm=eventForm)
     return edit_or_update_event(request, currentOrganizer, Event(organizer=currentOrganizer))
 
 # Edit Event
@@ -36,16 +46,23 @@ def edit_event(request, event_id):
     currentEvent = Event.objects.get(pk=event_id)
     currentOrganizer = Organizer.objects.get(user=request.user)
 
-    # Updating the event
-    if request.method == 'POST':
-        return edit_or_update_event(request, currentOrganizer, currentEvent)
-
-    # Getting event edit page
-    else:
+    oldEventForm = EventForm(request.POST)
+    form_has_errors = oldEventForm.errors # TODO Bug always false
+    # Getting the edit_event page
+    if request.method == 'GET' or form_has_errors:
         eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description, "location": currentEvent.location, "funding_sought": currentEvent.funding_sought}
         eventForm = EventForm(eventData)
+        # form doens't contains errors, create a fresh event
+        if form_has_errors:
+            # eventForm = oldEventForm
+            pass # TODO Bug doesn't show django error form.
         context = { "newEvent": eventForm, "edit": True, "sponsor_types": EventForm.getEventSponsorTypes(currentEvent), "currentEvent": currentEvent}
         return render(request, 'events/create.html', context)
+
+    # Updating the event
+    else:
+        return edit_or_update_event(request, currentOrganizer, currentEvent)
+    
 
 # TODO Throws error if not logged in; "Could not import organizer.views.signup. View does not exist in module organizer.views.""
 @login_required
@@ -69,8 +86,9 @@ def edit_or_update_event(request, organizer, currentEvent):
         currentEvent.funding_sought = eventForm.cleaned_data['funding_sought']
         currentEvent.save()
     else:
-        context = { "organizer": organizer, "newEvent": eventForm}
-        return render(request, 'events/create.html', context)
+        raise Http404 # should not reach here.
+        # context = { "organizer": organizer, "newEvent": eventForm}
+        # return render(request, 'events/create.html', context)
     imageForm = ImageUploadForm(request.POST, request.FILES)
     if imageForm.is_valid():
         obj, created = Event_Image.objects.get_or_create(event = currentEvent, defaults = {'pic': imageForm.cleaned_data['image']})

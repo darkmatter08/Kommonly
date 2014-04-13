@@ -14,16 +14,16 @@ class ImageUploadForm(forms.Form):
 	image = forms.ImageField(label='Event Image')
 
 class EventForm(forms.ModelForm):
-	def __init__(self, *args, **kwargs):
-		super(EventForm, self).__init__(*args, **kwargs)
-		expected_reach = forms.CharField(widget = forms.Textarea)
+	# def __init__(self, *args, **kwargs):
+	# 	super(EventForm, self).__init__(*args, **kwargs)
+	# 	expected_reach = forms.CharField(widget = forms.Textarea)
 
 	class Meta:
 		model = Event
 		fields = ['name', 'event_date', 'expected_reach', 'description', 'location', 'funding_sought']
-		widgets = {
-			'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
-		}
+		# widgets = {
+		# 	'expected_reach': Textarea(attrs={'cols': 80, 'rows': 10}),
+		# }
 		help_texts = {
 			'funding_sought': 'Dollar amount only. Additional details belong in description.'
 		}
