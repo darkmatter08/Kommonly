@@ -11,14 +11,58 @@
 		{% else %}
 		<form action="/api/organizer/newEvent" method="post" enctype="multipart/form-data">
 		{% endif %}
-	        <p><input id="id_image" type="file" class="" name="image"></p>
-	        <table>
-	            {{ newEvent.as_table }}
-	            {% for sponsor_type, selected in sponsor_types.items %}
-	            <tr><th><label for="{{sponsor_type}}">{{sponsor_type}}:</label></th><td><input name="{{sponsor_type}}" type="checkbox" {% if selected %}checked="True"{% endif %}/></td></tr>
-	            {% endfor %}
-	        </table>
-	        {% csrf_token %}
-        	<input type="submit" value="Save">
+			
+			
+	        
+	        
+			<div class="eventName" style="width: 80%;">
+				{{ newEvent.name}}
+				
+			</div>
+			
+			
+			<div class="aboutEvent">
+
+				<div class="eventDescription">
+					<br/>
+					<img src="{{ picture_url }}" style="width:200px; height: 100px;"></img> 
+					<p><input id="id_image" type="file" class="" name="image"></p>
+					<h4>About The Event </h4>
+					<hr>
+					<!-- <div id="businessLogo">
+						<img src="/static/event_icon.png" style="width: 100%;"></img>
+					</div> -->
+					<div id="businessTextDescription">
+						{{ newEvent.description}}
+					</div>
+				</div>
+
+				<div class="businessDetails">
+					<h4>Event Details: </h4>
+					<hr>
+					<div class="detailBox" id="businessOverview">
+						Funding Sought<font color="red">{{ newEvent.funding_sought }}</font>  <br/>
+						Expected Reach<font color="red">{{ newEvent.expected_reach }} </font> <br/>
+						Event Date<font color="red">{{ newEvent.event_date }}</font> <br/>
+					</div>
+					<div class="detailBox" id="sponsorshipTypes">
+						Event Needs: <br/><br/>
+						
+						{% for sponsor_type, selected in sponsor_types.items %}
+		            		<tr><th><label for="{{sponsor_type}}">{{sponsor_type}}:</label></th><td><input name="{{sponsor_type}}" type="checkbox" {% if selected %}checked="True"{% endif %}/></td></tr>
+		            	{% endfor %}
+							
+					</div>
+					<div class="detailBox" id="businessLocation">
+						Location <br/>
+						{{ newEvent.location }}
+					</div>			
+				</div>
+				<input type="submit" value="Save" class="orangeButton" style="">
+
+			</div>
+		        {% csrf_token %}
+
     	</form> 
+
 {% endblock %}

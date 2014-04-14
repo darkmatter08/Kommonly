@@ -56,7 +56,14 @@ def edit_event(request, event_id):
         if form_has_errors:
             # eventForm = oldEventForm
             pass # TODO Bug doesn't show django error form.
-        context = { "newEvent": eventForm, "edit": True, "sponsor_types": EventForm.getEventSponsorTypes(currentEvent), "currentEvent": currentEvent}
+        
+        pictures_objects = Event_Image.objects.filter(event=currentEvent)
+        picture = "/static/assets/event_image_filler.jpg"
+        if len(pictures_objects) != 0:
+            picture = "/static/assets/" + pictures_objects[0].pic.url.split("/")[-1]
+
+        context = { "newEvent": eventForm, "edit": True, "sponsor_types": EventForm.getEventSponsorTypes(currentEvent), "currentEvent": currentEvent, "picture_url": picture}
+        print eventForm;
         return render(request, 'events/create.html', context)
 
     # Updating the event

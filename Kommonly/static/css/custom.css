@@ -307,7 +307,7 @@ div.signupbutton a {
 	width: 100%;
 	margin: 0 auto;
 }
-input:not([type=submit]):not([type=file]) {
+input:not([type=submit]):not([type=file]):not([type=checkbox]) {
     border: 2px solid #f8f8f8;
 	padding: 10px;
 	background: rgba(255,255,255,0.5);
