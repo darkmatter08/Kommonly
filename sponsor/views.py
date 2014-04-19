@@ -63,7 +63,6 @@ def contact(request, business_id):
 
 	if request.method == 'POST':
 		form = ContactForm(request.POST,request.user.id)
-
 		print(form)
 		if form.is_valid():
 			send_mail(request.POST['subject'], request.POST['message'], "EventOrganizer@kommonly.com", ["nyassin14@gmail.com"])
