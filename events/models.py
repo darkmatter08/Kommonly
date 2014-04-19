@@ -10,10 +10,10 @@ class Event(models.Model):
 	create_date = models.DateTimeField(auto_now_add=True)
 	event_date = models.DateTimeField()
 	name = models.CharField(max_length=charFieldMaxLength)
-	description = models.CharField(max_length=1000)
-	expected_reach = models.CharField(max_length=50000)
+	description = models.CharField(max_length=10000)
+	expected_reach = models.CharField(max_length=charFieldMaxLength)
 	location = models.CharField(max_length=charFieldMaxLength)
-	funding_sought = models.DecimalField(max_digits=8, decimal_places=2)
+	funding_sought = models.DecimalField(max_digits=8, default=0, decimal_places=0)
 
 # Represents an agreed upon sponsorship
 # Transaction Table for Many to Many relationship between Event and Sponsor
