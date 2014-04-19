@@ -5,6 +5,8 @@ from organizer.models import *
 
 # Represents an Event, created by an Organizer. 
 class Event(models.Model):
+	def __str__(self):
+		return '%s' % (self.name)
 	# One to Many - Organizer to Event
 	organizer = models.ForeignKey(Organizer) 
 	create_date = models.DateTimeField(auto_now_add=True)
