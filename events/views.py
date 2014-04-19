@@ -34,11 +34,8 @@ def new_Event(request):
         return HttpResponseBadRequest()
     currentOrganizer = Organizer.objects.get(user=request.user)
     eventForm = EventForm(request.POST)
-    # valid_form = eventForm.is_valid()
     form_has_errors = eventForm.errors
-    # if not valid_form:
     if form_has_errors:
-        print "form has errors"*10
         return create_event_helper(request, eventForm=eventForm)
     return edit_or_update_event(request, currentOrganizer, Event(organizer=currentOrganizer))
 
@@ -49,7 +46,6 @@ def edit_event(request, event_id):
     currentOrganizer = Organizer.objects.get(user=request.user)
 
     oldEventForm = EventForm(request.POST)
-
     # Getting the edit_event page
     if request.method == 'GET' or not oldEventForm.is_valid():
         eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description, "location": currentEvent.location, "funding_sought": currentEvent.funding_sought}
@@ -60,10 +56,10 @@ def edit_event(request, event_id):
         if len(pictures_objects) != 0:
             picture = "/static/assets/" + pictures_objects[0].pic.url.split("/")[-1]
 
-        # form contains errors, render the oldEventForm.
-        if not oldEventForm.is_valid():
+        # form contains errors, render it
+        if not oldEventForm.is_valid() and not (request.method == 'GET'):
             eventForm = oldEventForm
-        
+
         context = { "newEvent": eventForm, "edit": True, "sponsor_types": EventForm.getEventSponsorTypes(currentEvent), "currentEvent": currentEvent, "picture_url": picture}
         return render(request, 'events/create.html', context)
 
