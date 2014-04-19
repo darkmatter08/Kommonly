@@ -26,6 +26,7 @@ def create_event(request):
 def create_event_helper(request, eventForm=EventForm()):
     currentOrganizer = Organizer.objects.get(user=request.user)
     context = { "newEvent": eventForm, "edit": False, "sponsor_types": EventForm.getEventSponsorTypes()}
+    render(request, 'events/create.html', context)
     return render(request, 'events/create.html', context)
 
 def new_Event(request):
@@ -37,6 +38,7 @@ def new_Event(request):
     form_has_errors = eventForm.errors
     # if not valid_form:
     if form_has_errors:
+        print "form has errors"*10
         return create_event_helper(request, eventForm=eventForm)
     return edit_or_update_event(request, currentOrganizer, Event(organizer=currentOrganizer))
 
@@ -47,23 +49,22 @@ def edit_event(request, event_id):
     currentOrganizer = Organizer.objects.get(user=request.user)
 
     oldEventForm = EventForm(request.POST)
-    form_has_errors = oldEventForm.errors # TODO Bug always false
+
     # Getting the edit_event page
-    if request.method == 'GET' or form_has_errors:
+    if request.method == 'GET' or not oldEventForm.is_valid():
         eventData = { "name": currentEvent.name, "event_date": currentEvent.event_date, "expected_reach": currentEvent.expected_reach, "description": currentEvent.description, "location": currentEvent.location, "funding_sought": currentEvent.funding_sought}
         eventForm = EventForm(eventData)
-        # form doens't contains errors, create a fresh event
-        if form_has_errors:
-            # eventForm = oldEventForm
-            pass # TODO Bug doesn't show django error form.
         
         pictures_objects = Event_Image.objects.filter(event=currentEvent)
         picture = "/static/assets/event_image_filler.jpg"
         if len(pictures_objects) != 0:
             picture = "/static/assets/" + pictures_objects[0].pic.url.split("/")[-1]
 
+        # form contains errors, render the oldEventForm.
+        if not oldEventForm.is_valid():
+            eventForm = oldEventForm
+        
         context = { "newEvent": eventForm, "edit": True, "sponsor_types": EventForm.getEventSponsorTypes(currentEvent), "currentEvent": currentEvent, "picture_url": picture}
-        print eventForm;
         return render(request, 'events/create.html', context)
 
     # Updating the event
@@ -92,10 +93,6 @@ def edit_or_update_event(request, organizer, currentEvent):
         currentEvent.location = eventForm.cleaned_data['location']
         currentEvent.funding_sought = eventForm.cleaned_data['funding_sought']
         currentEvent.save()
-    else:
-        raise Http404 # should not reach here.
-        # context = { "organizer": organizer, "newEvent": eventForm}
-        # return render(request, 'events/create.html', context)
     imageForm = ImageUploadForm(request.POST, request.FILES)
     if imageForm.is_valid():
         obj, created = Event_Image.objects.get_or_create(event = currentEvent, defaults = {'pic': imageForm.cleaned_data['image']})
