@@ -6,6 +6,9 @@
 {% extends "organizer/layout.html"%}
 
 {% block content %}
+		{{ newEvent.non_field_errors }}
+		{{ newEvent.errors }}
+
 		{% if edit %}
 		<form action="/events/{{currentEvent.pk}}/edit" method="post" enctype="multipart/form-data">
 		{% else %}
@@ -16,7 +19,7 @@
 	        
 	        
 			<div class="eventName" style="width: 80%;">
-				{{ newEvent.name}}
+				{{ newEvent.name }}
 				
 			</div>
 			
