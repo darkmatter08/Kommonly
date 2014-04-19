@@ -6,6 +6,7 @@ from organizer.models import *
 from django.core.mail import send_mail
 from django import forms
 from events.models import *
+from sponsor.forms import *
 
 def show_business_dashboard(request):
 	print "Hello there. This is the organizer page"
@@ -43,7 +44,7 @@ def business_profile(request, business_id):
 			eventreach = Event.objects.filter(organizer_id=request.user.id)[0].expected_reach
 			organization = Organizer.objects.get(user_id=request.user.id).organization
 			email = request.user.email
-		
+	'''
 	message = "Dear " + business.contact_fname + ', I am ' + name + ' and am putting on an event on '
 	message += eventdate + " called " + eventname + ". We would love to have you sponsor our organization with "
 	message += "either money, food, swag or possibly a venue. In exchange, our organization, "
@@ -52,23 +53,18 @@ def business_profile(request, business_id):
 	message += "and connect with our talented students. We anticipate " + eventreach + " people to attend, most of whom would be very interested in your company. "
 	message += "Sponsoring our event would show a real commitment to <STATE YOUR CAUSE HERE>, which we believe "
 	message += "would reflect quite positively on your company. It will also be a lot of fun to attend if you choose to send "
-	message += "members of " + business.name + " to " + eventname + "."
-	data = {'subject': business.name + " sponsorship for event", 'message':message,'organizer_email':email}
-	return render(request, 'sponsor/profile.html', {'business':business, 'funding_types':sponsorship_types, 'organizer':request.user, 'form':ContactForm(data)})
+	message += "members of " + business.name + " to " + eventname + "."'''
+	#data = {'subject': business.name + " sponsorship for event"}
+	organizer_id = Organizer.objects.get(user_id=request.user.id).id
+	return render(request, 'sponsor/profile.html', {'business':business, 'funding_types':sponsorship_types, 'organizer':request.user, 'form':ContactForm(organizer_id)})
 
-class ContactForm(forms.Form):
-	print "contactform"
-	subject = forms.CharField(max_length=100, initial="Sponsorship for ")
-	message = forms.CharField(widget = forms.Textarea)
-	organizer_email = forms.EmailField()
-	#events = forms.ModelMultipleChoiceField(["hello", "goodbye"]]) 
-
-	cc_myself = forms.BooleanField(required=False)
 
 def contact(request, business_id):
 	print "contact reached"
+
 	if request.method == 'POST':
-		form = ContactForm(request.POST)
+		form = ContactForm(request.POST,request.user.id)
+		print request, "request in contact"
 		print(form)
 		if form.is_valid():
 			print "form is valid"
