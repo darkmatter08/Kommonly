@@ -60,17 +60,12 @@ def business_profile(request, business_id):
 
 
 def contact(request, business_id):
-	print "contact reached"
 
 	if request.method == 'POST':
 		form = ContactForm(request.POST,request.user.id)
-		print request, "request in contact"
+
 		print(form)
 		if form.is_valid():
-			print "form is valid"
-			send_mail(request.POST['subject'], request.POST['message'], request.POST['organizer_email'],
-	['amymichelleyin@gmail.com'], fail_silently=False)
+			send_mail(request.POST['subject'], request.POST['message'], "EventOrganizer@kommonly.com", ["nyassin14@gmail.com"])
 			return null
-	
-	business = Sponsor.objects.get(id=business_id)
 	return

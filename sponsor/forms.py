@@ -14,7 +14,7 @@ class ContactForm(forms.Form):
 	def __init__(self, userid, *args, **kwargs):
 		super(ContactForm, self).__init__(*args, **kwargs)
 		if len(Event.objects.filter(organizer_id=userid)) > 0:
-			self.fields['events'] = forms.ModelChoiceField(queryset=Event.objects.filter(organizer_id=userid),to_field_name="id") 
+			self.fields['events'] = forms.ModelChoiceField(queryset=Event.objects.filter(organizer_id=userid),to_field_name="id", label="Attach Event:") 
 
 	subject = forms.CharField(max_length=150)
 	message = forms.CharField(widget = forms.Textarea)
