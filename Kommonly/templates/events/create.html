@@ -41,10 +41,12 @@
 					<h4>Event Details: </h4>
 					<hr>
 					<div class="detailBox" id="businessOverview">
-						<span class="input-group-addon">$</span>
-						Funding Sought<font color="red">{{ newEvent.funding_sought }}</font>  <br/>
-						Expected Reach<font color="red">{{ newEvent.expected_reach }} </font> <br/>
-						Event Date<font color="red">{{ newEvent.event_date }}</font> <br/>
+						Funding Sought: ($)
+						<font color="green">{{ newEvent.funding_sought }}</font>
+
+						<br/>
+						Expected Reach<font color="green">{{ newEvent.expected_reach }} </font> <br/>
+						Event Date<font color="green">{{ newEvent.event_date }}</font> <br/>
 					</div>
 					<div class="detailBox" id="sponsorshipTypes">
 						Event Needs: <br/><br/>
@@ -59,7 +61,7 @@
 						{{ newEvent.location }}
 					</div>			
 				</div>
-				<input type="submit" value="Save" class="orangeButton" style="">
+				<input type="submit" value="Save" class="orangeButton" style="margin-bottom:40px; margin-left: 20%;">
 
 			</div>
 		        {% csrf_token %}
