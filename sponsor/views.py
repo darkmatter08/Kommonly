@@ -54,8 +54,9 @@ def business_profile(request, business_id):
 	message += "Sponsoring our event would show a real commitment to <STATE YOUR CAUSE HERE>, which we believe "
 	message += "would reflect quite positively on your company. It will also be a lot of fun to attend if you choose to send "
 	message += "members of " + business.name + " to " + eventname + "."'''
-	data = {'subject': business.name + " sponsorship for event"}
-	return render(request, 'sponsor/profile.html', {'business':business, 'funding_types':sponsorship_types, 'organizer':request.user, 'form':ContactForm(data)})
+	#data = {'subject': business.name + " sponsorship for event"}
+	organizer_id = Organizer.objects.get(user_id=request.user.id).id
+	return render(request, 'sponsor/profile.html', {'business':business, 'funding_types':sponsorship_types, 'organizer':request.user, 'form':ContactForm(organizer_id)})
 
 
 def contact(request, business_id):

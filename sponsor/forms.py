@@ -11,17 +11,11 @@ from events.models import *
 from sponsor.models import *
 
 class ContactForm(forms.Form):
-	print "ContactForm"
 	def __init__(self, userid, *args, **kwargs):
-		print "userid", userid
 		super(ContactForm, self).__init__(*args, **kwargs)
-		if len(Event.objects.filter(organizer_id=13)) > 0:
-			self.fields['events'] = forms.ModelChoiceField(queryset=Event.objects.filter(organizer_id=13),to_field_name="id") 
+		if len(Event.objects.filter(organizer_id=userid)) > 0:
+			self.fields['events'] = forms.ModelChoiceField(queryset=Event.objects.filter(organizer_id=userid),to_field_name="id") 
 
-	subject = forms.CharField(max_length=100, initial="Sponsorship for ")
+	subject = forms.CharField(max_length=150)
 	message = forms.CharField(widget = forms.Textarea)
-	#organizer_email = forms.EmailField()
-	#if len(Event.objects.filter(organizer_id=user.id)) > 0:
-		#events = forms.ModelChoiceField(queryset=Event.objects.filter(organizer_id=user.id)) 
-
 	cc_myself = forms.BooleanField(required=False)
