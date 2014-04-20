@@ -15,6 +15,7 @@
 
         <script type="text/javascript">
             $(function () {
+            	// http://eonasdan.github.io/bootstrap-datetimepicker/
                 $('#datetimepicker').datetimepicker({
                 	defaultDate:moment("{{ newEvent.event_date.value|date:'Y-m-d H:i' }}")
                 });
