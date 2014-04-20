@@ -59,7 +59,13 @@
 					<hr>
 					<div class="detailBox" id="businessOverview">
 						Funding Sought: ($)
-						<font color="green">{{ newEvent.funding_sought }}</font>
+						<font color="green">
+							<div class="input-group input-group-lg">
+							  <span class="input-group-addon">$</span>
+							  <input id="id_funding_sought" class="input-group-lg" name="funding_sought" style="margin: 0 0 0 0;" step="1" type="number" value="{{ newEvent.funding_sought.value }}">
+							  <span class="input-group-addon">.00</span>
+							</div>
+						</font>
 
 						<br/>
 						Expected Reach<font color="green">{{ newEvent.expected_reach }} </font> <br/>
