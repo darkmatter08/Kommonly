@@ -26,9 +26,9 @@
 		<h4>Event Details: </h4>
 		<hr>
 		<div class="detailBox" id="businessOverview">
-			<font color="red">${{ currentEvent.funding_sought }}</font> Funding Sought <br/>
-			<font color="red">{{ currentEvent.expected_reach }} </font> Expected Reach<br/>
-			<font color="red">{{ currentEvent.event_date }}</font> Event Date<br/>
+			Funding Sought: <font color="red">${{ currentEvent.funding_sought }}</font><br/>
+			Expected Reach: <font color="red">{{ currentEvent.expected_reach }} </font><br/>
+			Event Date: <font color="red">{{ currentEvent.event_date|date:'l, F d, Y h:i A' }}</font><br/>
 		</div>
 		<div class="detailBox" id="sponsorshipTypes">
 			Event Needs: <br/><br/>

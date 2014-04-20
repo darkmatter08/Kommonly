@@ -8,6 +8,19 @@
 {% block content %}
 		{{ newEvent.non_field_errors }}
 		{{ newEvent.errors }}
+		<!-- For Datetime picker -->
+		<script type="text/javascript"src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script> 
+		<link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.min.css" />
+		<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.min.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker').datetimepicker({
+                	defaultDate:moment("{{ newEvent.event_date.value|date:'Y-m-d H:i' }}")
+                });
+            });
+        </script>
+		
 
 		{% if edit %}
 		<form action="/events/{{currentEvent.pk}}/edit" method="post" enctype="multipart/form-data">
@@ -49,7 +62,7 @@
 
 						<br/>
 						Expected Reach<font color="green">{{ newEvent.expected_reach }} </font> <br/>
-						Event Date<font color="green">{{ newEvent.event_date }}</font> <br/>
+						Event Date<font color="green"></font><input type='text' class="form-control" data-date-format="MM/DD/YYYY HH:mm" id='datetimepicker' name="event_date"/><br/>
 					</div>
 					<div class="detailBox" id="sponsorshipTypes">
 						Event Needs: <br/><br/>
