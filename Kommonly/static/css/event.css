@@ -10,7 +10,9 @@
 .aboutEvent {
 	min-height: 600px;
 	background-color: #F8F8F8;
-
+	display: inline-block;
+	margin-bottom: -4px;
+	width: 100%;
 }
 
 .eventDescription {

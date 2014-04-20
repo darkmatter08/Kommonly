@@ -70,12 +70,6 @@ body {
 	margin-top: 5px;
 	height: 30px;
 }
-#footerLogo {
-	height: 60px;
-	padding-bottom: 5px;
-	padding-left:30px;
-}
-
 	
 div.logged-in ul {
 	list-style-type: none;
